@@ -11,10 +11,7 @@
         <title>ITS-assistant</title>
 
         <!-- Bootstrap -->
-        {% stylesheets
-            'bundles/app/bower_components/bootstrap/dist/css/bootstrap.min.css' %}
-            <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
+        <link href="{{ asset('../vendor/twbs/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,11 +23,10 @@
 
     <body>
         {% block body %}{% endblock %}
-        {% javascripts
-            'bundles/app/bower_components/jquery/dist/jquery.min.js'
-            'bundles/app/bower_components/bootstrap/dist/js/bootstrap.min.js' %}
+        {% javascripts '@AppBundle/Resources/myjs/*' %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         {#<script src="{{ asset('../vendor/twbs/bootstrap/dist/bootstrap.min.js') }}"></script>#}
         {% block javascripts %}{% endblock %}
     </body>
