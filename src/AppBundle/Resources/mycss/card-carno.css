@@ -1,0 +1,10 @@
+#card-carno {
+    border-right:2px solid #00b3ee;
+    border-bottom: 2px solid #00b3ee;
+    box-shadow: 0px 0px 20px rgba(255, 255, 255, 1);
+}
+#card-carno .app {
+    background-color: rgba(0, 1, 255, 0.4);
+    background-size: cover;
+    height: 100%;
+}
