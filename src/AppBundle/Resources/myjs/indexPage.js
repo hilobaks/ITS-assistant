@@ -9,8 +9,10 @@
         },
 
         setUpListeners: function () {
-            var ulApp = document.querySelector('#open-app-button');
+            var ulApp = document.querySelector('#open-app-button'),
+                calcIP = document.querySelector('#calc-IP');
             EventUtil.addHandler(ulApp, 'click', this.checkShowModal);
+            EventUtil.addHandler(calcIP, 'click', this.ipCalc);
         },
         eventHandlers : {
             checkShowModal: function (event) {
@@ -22,47 +24,52 @@
                 closeBorderMenu.dispatchEvent(triggerEvent);
 
                 event.preventDefault(event);
-                var target = EventUtil.getTarget(event),
-                    that = app.eventHandlers;
+                var target = EventUtil.getTarget(event);
                 switch(target.id) {
                     case "open-ip-calc":
-                        that.showModalCalc();
+                        app.helpFunc.showModal('#ip-calc-modal');
                         break;
                     case "open-master-report":
-                        that.showModalReport();
+                        app.helpFunc.showModal('#master-report-modal');
                         break;
                     case "open-card-carno":
-                        that.showModalCardCarno();
+                        app.helpFunc.showModal('#card-carno-modal');
                         break;
                     case "open-diagram":
-                        that.showModalDiagrams();
+                        app.helpFunc.showModal('#diagram-modal');
                         break;
                 }
             },
-            showModalCalc : function (event) {
-                var numberOneInMask = document.querySelector('#number-one-in-mask');
-                $(numberOneInMask).mask('/9?99');
-                var CalcModal = document.querySelector('#ip-calc-modal');
-                $(CalcModal).modal('show');
-            },
-            showModalReport: function (event) {
-                //event.preventDefault();
-                var CalcModal = document.querySelector('#master-report-modal');
-                $(CalcModal).modal('show');
-            },
-            showModalCardCarno: function (event) {
-                //event.preventDefault();
-                var CalcModal = document.querySelector('#card-carno-modal');
-                $(CalcModal).modal('show');
-            },
-            showModalDiagrams: function (event) {
-                //event.preventDefault();
-                var CalcModal = document.querySelector('#card-carno-modal');
-                $(CalcModal).modal('show');
+            ipCalc: function () {
+                var inputIpAddress = document.querySelectorAll('.input-ip-address'),
+                    helpFunc = app.helpFunc,
+                    crossInnerText = helpFunc.crossInnerText,
+                    tenToSecond = helpFunc.tenToSecond(),
+                    firstPart = crossInnerText(inputIpAddress[0]),
+                    secondPart = crossInnerText(inputIpAddress[1]),
+                    thirdPart = crossInnerText(inputIpAddress[2]),
+                    fourthPart = crossInnerText(inputIpAddress[3]);
+                tenToSecond([firstPart, secondPart, thirdPart, fourthPart]);
             }
         },
         constant: {
 
+        },
+        helpFunc: {
+            showModal: function (modalWindow) {
+                var CalcModal = document.querySelector(modalWindow);
+                $(CalcModal).modal('show');
+            },
+            tenToSecond: function (valueInTen) {
+                var ipAddressInTwo = [];
+                for(var field in valueInTen) {
+                    ipAddressInTwo.push(valueInTen[field].toString(2));
+                }
+                return ipAddressInTwo;
+            },
+            crossInnerText: function (elem) {
+                return elem.innerText || elem.textContent;
+            }
         }
     };
     app.initialize();

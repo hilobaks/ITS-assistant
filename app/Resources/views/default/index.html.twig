@@ -55,7 +55,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <label for="input-ip-address">IP-адрес</label>
+                                    <label for="title-input-ip-address">IP-адрес</label>
                                 </div>
                                 <div class="col-lg-3">
                                     <input type="text" class="form-control input-ip-address text-center" placeholder="192" maxlength="3" size="3" pattern="\d{1,3}" required>
@@ -100,22 +100,20 @@
                                     <span class="hidden">.</span>
                                 </div>
                             </div>
+                            <div class="row hidden">
+                                <div class="col-lg-12">
+                                    <label for="output-ip-address">Адрес сети</label>
+                                    <div class="col-lg-12">
+                                        <label for="input-ip-address">IP-адрес</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Маска подсети</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"> Проверить меня
-                            </label>
-                        </div>
-                        <button type="submit" class="btn btn-default">Отправить</button>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary">Сохранить изменения</button>
+                    <button type="button" class="btn btn-default" style="float: right" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" id="calc-IP" style="float: left">Посчитать</button>
                 </div>
             </div>
         </div>
@@ -132,7 +130,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary">Сохранить изменения</button>
+                    <button type="button" class="btn btn-primary">Посчитать</button>
                 </div>
             </div>
         </div>
@@ -143,6 +141,23 @@
                 <div class="modal-header text-center">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h2 class="modal-title" id="title-card-carno-modal">Карты Карно</h2>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-success">Посчитать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="diagram-modal" tabindex="-1" role="dialog" aria-labelledby="title-diagram-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title" id="title-diagram-modal">Диаграма Вольпера-Смитта</h2>
                 </div>
                 <div class="modal-body">
                     ...
