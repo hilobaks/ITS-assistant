@@ -38,6 +38,16 @@ twig:
 
 # Assetic Configuration
 assetic:
+    assets:
+        bootstrap_css:
+            inputs:
+                - 'bundles/app/bower_components/bootstrap/dist/css/bootstrap.min.css'
+        bootstrap_js:
+            inputs:
+                - 'bundles/app/bower_components/bootstrap/dist/js/bootstrap.min.js'
+        jquery:
+            inputs:
+                - 'bundles/app/bower_components/jquery/dist/jquery.min.js'
     debug:          "%kernel.debug%"
     use_controller: false
     bundles:        [ ]

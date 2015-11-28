@@ -10,12 +10,12 @@
         <title>ITS-assistant</title>
         <!-- Bootstrap -->
         {% stylesheets
-            'bundles/app/bower_components/bootstrap/dist/css/bootstrap.min.css'
-            '@AppBundle/Resources/mycss/AnimatedBorderMenu/*'
+            '@bootstrap_css'
+            'mycss/AnimatedBorderMenu/*'
         %}
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
-        {% javascripts '@AppBundle/Resources/myjs/AnimatedBorderMenu/modernizr.custom.js'%}
+        {% javascripts 'myjs/AnimatedBorderMenu/modernizr.custom.js'%}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -29,37 +29,18 @@
     </head>
 
     <body>
-        <nav id="bt-menu" class="bt-menu">
-            <a href="#" class="bt-menu-trigger"><span>Menu</span></a>
-            <ul id="open-app-button">
-                <li><a href="" class="fa fa-calculator fa-3x" id="open-ip-calc"  title="IP-калькулятор"></a></li>
-                <li><a href="" class="fa fa-file-text-o fa-3x" id="open-master-report" title="Мастер-отчетов"></a></li>
-                <li><a href="" class="fa fa-sitemap fa-3x" id="open-card-carno" title="Карты Карно"></a></li>
-                <li><a href="" class="fa fa-anchor fa-3x" id="open-diagram" title="Диаграма Вольпера-Смитта"></a></li>
-            </ul>
-            <ul>
-                <li><a href="#" class="fa fa-refresh" title="Обновить"></a></li>
-                <li><a href="#" class="fa fa-comment" title="Обратная связь"></a></li>
-
-                {#<li><a href="#" class="fa fa-vk fa-3x">VK</a></li>#}
-                {#<li><a href="#" class="fa fa-facebook fa-3x">Facebook</a></li>#}
-                {#<li><a href="#" class="fa fa-google-plus fa-3x">Google+</a></li>#}
-            </ul>
-        </nav>
         {% block body %}{% endblock %}
         {% javascripts
-            'bundles/app/bower_components/jquery/dist/jquery.min.js'
-            'bundles/app/bower_components/bootstrap/dist/js/bootstrap.min.js' %}
+            '@jquery'
+            '@bootstrap_js' %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
         {% javascripts
-            '@AppBundle/Resources/myjs/AnimatedBorderMenu/classie.js'
-            '@AppBundle/Resources/myjs/AnimatedBorderMenu/borderMenu.js'
+            'myjs/AnimatedBorderMenu/classie.js'
+            'myjs/AnimatedBorderMenu/borderMenu.js'
         %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
         {% block javascripts %}{% endblock %}
-        <script src="js/classie.js"></script>
-        <script src="js/borderMenu.js"></script>
     </body>
 </html>
