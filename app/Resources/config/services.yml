@@ -1,0 +1,4 @@
+services:
+    authorization:
+        class:        AppBundle\Service\Authorization
+        arguments:    ["@doctrine.orm.default_entity_manager"]

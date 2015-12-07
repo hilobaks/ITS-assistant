@@ -1,47 +1,74 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-    {% stylesheets 'mycss/registration.css' %}
+    {% stylesheets 'mycss/registration-autorization.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
-        <link href='https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'/>
+        <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     {% endstylesheets %}
 {% endblock %}
 {% block body %}
     <div class="container">
-        <div class="row">
-            <div class="col-lg-offset-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <form role="form">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Имя</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+        <div>
+            <div class="row">
+                <div class="col-lg-offset-3 col-lg-6 text-center">
+                    <div>
+                        <h2>Регистрация</h2>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Фамилия</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Отчество</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Пароль</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Причина использования данного ресурса</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <button type="submit" class="btn btn-default">Отправить</button>
-                </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-offset-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <form role="form" action="{{ path('sign_up') }}" id="registration-form" method="post">
+                        <div class="form-group">
+                            <label for="input-first-name">Имя</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text"  class="form-control" id="input-first-name" name="first-name" placeholder="Введите Ваше имя" pattern="[А-ЯІ]?[а-яі]+[-]?[А-ЯІ]?[а-яі]{0,15}" required>
+                                <span class="glyphicon form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-second-name">Фамилия</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" class="form-control" id="input-second-name" name="second-name" pattern="[А-ЯІ]?[а-яі]+[-]?[А-ЯІ]?[а-яі]{0,15}" required placeholder="Введите Вашу фамилию">
+                                <span class="glyphicon form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-patronymic">Отчество</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" class="form-control" id="input-patronymic" name="patronymic" pattern="[А-ЯІ]?[а-яі]+[-]?[А-ЯІ]?[а-яі]{0,15}" required placeholder="Введите Ваше отчество">
+                                <span class="glyphicon form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-email">Email</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                {# Реализовать проверку js #}
+                                <input type="email" class="form-control" name="email" pattern="/[a-z]+\.?[a-z]*+@[a-z]+\.[a-z]+/"  id="input-email" required placeholder="Введите Ваш e-mail">
+                                <span class="glyphicon form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-use-reason">Причина использования данного ресурса</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-question"></i></span>
+                                <textarea name="use-reason" class="form-control" id="input-use-reason" rows="5" required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-block btn-success">Отправить</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+    {% include(':default:temp-modal-window.html.twig') %}
 {% endblock %}
 {% block javascripts %}
-    {% javascripts 'myjs/*' %}
+    {% javascripts 'myjs/registration-autorization.js' %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

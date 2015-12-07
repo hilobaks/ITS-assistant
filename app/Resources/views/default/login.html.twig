@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {% stylesheets 'mycss/registration-autorization.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    {% endstylesheets %}
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div id="parent-form">
+            <div class="row">
+                <div class="col-lg-offset-3 col-lg-6 text-center">
+                    <div>
+                        <h2>Авторизация</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-offset-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <form role="form" action="{{ path('sign_in') }}" id="authorization-form" method="post">
+                        <div class="form-group">
+                            <label for="input-email">Email</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                {# Реализовать проверку js #}
+                                <input type="email" class="form-control" name="email" pattern="/[a-z]+\.?[a-z]*+@[a-z]+\.[a-z]+/"  id="input-email" required placeholder="Введите Ваш e-mail">
+                                <span class="glyphicon form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-second-name">Пароль</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                <input type="password" class="form-control" id="input-password" name="input-password" required placeholder="Введите Ваш пароль">
+                                <span class="glyphicon form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-block btn-success">
+                            <i class="fa fa-sign-in fa-lg "></i> Войти</a>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include(':default:temp-modal-window.html.twig') %}
+{% endblock %}
+{% block javascripts %}
+    {% javascripts 'myjs/registration-autorization.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+

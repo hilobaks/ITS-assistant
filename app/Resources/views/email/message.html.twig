@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <title> Добро пожаловать в ITS-assistant</title>
+
+    <style type="text/css">
+        #title-message {
+            width: 100%;
+            margin: 15px;
+        }
+        #title-message span{
+            width: 100%;
+            text-align: center;
+            color: #204d74;
+            font-size: 25px;
+        }
+        #body-message {
+            margin: 50px;
+        }
+        #body-message span:nth-child(1), #body-message span:nth-child(3) {
+            font-size: 17px;
+            font-weight: 700;
+        }
+        #body-message span:nth-child(2), #body-message span:nth-child(4) {
+            font-size: 15px;
+            font-weight: 100;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="title-message">
+        <span>Спасибо за регистрацию в ITS-assistant!!!</span>
+    </div>
+    <div id="body-message">
+        <span>Ваш логин для входа : <span>{{ info.login }}</span></span><br>
+        <span>Ваш пароль для входа : <span>{{ info.password }}</span></span><br>
+    </div>
+</body>
+</html>

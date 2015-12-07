@@ -1,0 +1,25 @@
+html, body, .container {
+    height: 100%;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.container > .row:nth-child(2) > span {
+    color: #204d74;
+    font-size: 20px;
+}
+.container > .row:nth-child(2) > a {
+    margin: 20px;
+}
+.container > .row:nth-child(1) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container > .row:nth-child(1) > i {
+    color: #009999;
+    margin: 15px 15px;
+}

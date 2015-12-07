@@ -3,7 +3,6 @@
  */
 (function() {
     var app = {
-
         initialize : function () {
             this.setUpListeners.call(this.eventHandlers);
         },
@@ -82,17 +81,16 @@
                 event = EventUtil.getEvent(event);
                 var target = EventUtil.getTarget(event);
                 if(target.classList.contains('input-mask-subnetwork')) {
-                    var inputMaskSubnetwork = document.querySelectorAll('.input-mask-subnetwork'),
+                    var inputMaskSubNetwork = document.querySelectorAll('.input-mask-subnetwork'),
                         idNumberOneInMask = 'number-one-in-mask',
                         numberOneInMask = document.getElementById(idNumberOneInMask),
                         addRequiredForElement = function (boolValue) {
                             //inputMaskSubnetwork.length - 2 - все кроме последнего
-                            for(var i = 0; i <= inputMaskSubnetwork.length - 2; i++) {
-                                inputMaskSubnetwork[i].required = boolValue;
+                            for(var i = 0; i <= inputMaskSubNetwork.length - 2; i++) {
+                                inputMaskSubNetwork[i].required = boolValue;
                         }
                     };
                     if(target.getAttribute('id') === idNumberOneInMask) {
-                        //Плохо, нужно переписать
                         target.required = true;
                         addRequiredForElement(false);
                     } else {
@@ -105,7 +103,7 @@
         eventElement: {
             ulApp : document.querySelector('#open-app-button'),
             formCalcIP : document.querySelector('#form-calc-IP'),
-            inputMaskSubNetwork : document.getElementById('mask-sub-network')
+            inputMaskSubNetwork : document.getElementById('mask-sub-network'),
         },
         helpFunc: {
             showModal: function (modalWindow) {

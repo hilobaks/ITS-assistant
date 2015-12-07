@@ -1,0 +1,23 @@
+html, body, .container {
+    height: 100%;
+}
+label, h2 {
+    color: #204d74;
+}
+.container {
+    padding-top:0;
+    padding-bottom:0;
+}
+.container > #parent-form {
+    top: 25%;
+    position: relative;
+}
+/*Надпись регистрация*/
+.container > div > .row:first-child > div > div {
+    margin-bottom: 15px;
+    border-bottom: 2px solid #204d74;
+}
+
+#temp-window {
+    color: #204d74;
+}

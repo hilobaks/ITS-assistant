@@ -1,14 +1,22 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
+    {% stylesheets 'mycss/AnimatedBorderMenu/*' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
     {% stylesheets 'mycss/*' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
-        <link href='https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     {% endstylesheets %}
+    {% javascripts 'myjs/AnimatedBorderMenu/modernizr.custom.js'%}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
 {% block body %}
-    <nav id="bt-menu" class="bt-menu">
+    {% if authorization is defined  %}
+        <nav id="bt-menu" class="bt-menu">
         <a href="#" class="bt-menu-trigger" title="Меню"><span>Menu</span></a>
-        <a href="{{ path('registration') }}" class="fa fa-sign-in fa-4x" title="Регистрация"><span></span></a>
+        <a href="{{ path('registration') }}" class="fa fa-user-plus fa-3x" style="font-size: 3.3em;" title="Регистрация"><span></span></a>
+        <a href="{{ path('login') }}" class="fa fa-sign-in fa-4x" title="Войти"><span></span></a>
         <ul id="open-app-button">
             <li><a href="" class="fa fa-calculator fa-3x" id="open-ip-calc"  title="IP-калькулятор"></a></li>
             <li><a href="" class="fa fa-file-text-o fa-3x" id="open-master-report" title="Мастер-отчетов"></a></li>
@@ -24,43 +32,77 @@
             {#<li><a href="#" class="fa fa-google-plus fa-3x">Google+</a></li>#}
         </ul>
     </nav>
+    {% endif %}
     <div class="container-fluid">
-        <div>
-            <h1>ITS-assistant</h1>
+        <div class="row text-center">
+            <h1 id="name-app">ITS-assistant</h1>
         </div>
-        <div class="row" style="height: 50%">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="card-carno" style=" background: url({{ asset('/myimg/card-carno.jpg') }}) no-repeat; background-size: 100% 100%;">
-                <div class="row" style="height: 100%;">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 app" >
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="diagrams-volpera-smita" style=" background: url({{ asset('/myimg/diagrams.jpg') }}) no-repeat; background-size: cover;">
-                <div class="row" style="height: 100%;">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 app">
-
-                    </div>
-                </div>
-            </div>
+        <div class="row text-center">
+            <a href="{{ path('login') }}" class="btn-success btn">
+                <i class="fa fa-sign-in fa-lg"></i>
+                <span>Войти</span>
+            </a>
+            </a>
+            <a href="{{ path('registration') }}" class="btn btn-warning">
+                <i class="fa fa-user-plus fa-lg"></i>
+                <span>Регистрация</span>
+            </a>
         </div>
-        <div class="row" style="height: 50%">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="ip-calculator" style=" background: url({{ asset('/myimg/network.jpg') }}) no-repeat; background-size: cover;">
-                <div class="row" style="height: 100%;">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 app" >
+        {#<div class="row" style="height: 50%">#}
+            {#<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="card-carno" style=" background: url({{ asset('/myimg/card-carno.jpg') }}) no-repeat; background-size: 100% 100%;">#}
+                {#<div class="row" style="height: 100%;">#}
+                    {#<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 app" >#}
 
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="master-report" style=" background: url({{ asset('/myimg/report.png') }}) no-repeat; background-size: cover">
-                <div class="row" style="height: 100%;">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 app">
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="diagrams-volpera-smita" style=" background: url({{ asset('/myimg/diagrams.jpg') }}) no-repeat; background-size: cover;">#}
+                {#<div class="row" style="height: 100%;">#}
+                    {#<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 app">#}
 
-                    </div>
-                </div>
-            </div>
-        </div>
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="row" style="height: 50%">#}
+            {#<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="ip-calculator" style=" background: url({{ asset('/myimg/network.jpg') }}) no-repeat; background-size: cover;">#}
+                {#<div class="row" style="height: 100%;">#}
+                    {#<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 app" >#}
+
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="master-report" style=" background: url({{ asset('/myimg/report.png') }}) no-repeat; background-size: cover">#}
+                {#<div class="row" style="height: 100%;">#}
+                    {#<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 app">#}
+
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
     </div>
+    <footer class="text-center">
+        <div id="social-network">
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-vk fa-stack-1x"></i>
+            </span>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-facebook fa-stack-1x"></i>
+            </span>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-google-plus fa-stack-1x"></i>
+            </span>
+        </div>
+        <div class="contacts-author">
+            <address>
+                <strong>Email</strong><br>
+                <a href="mailto:#">hilobaks@outlook.com</a>
+            </address>
+        </div>
+    </footer>
     <div class="modal fade bs-example-modal-sm" id="ip-calc-modal" tabindex="-1" role="dialog" aria-labelledby="title-calc-modal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -205,6 +247,12 @@
 {% endblock %}
 {% block javascripts %}
     {% javascripts 'myjs/*' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% javascripts
+        'myjs/AnimatedBorderMenu/classie.js'
+        'myjs/AnimatedBorderMenu/borderMenu.js'
+    %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

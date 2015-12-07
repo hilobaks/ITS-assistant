@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {% stylesheets 'mycss/thanks.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    {% endstylesheets %}
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row text-center">
+            <i class="fa fa-check-circle-o fa-4x"></i>
+            <i class="fa fa-arrow-right fa-3x"></i>
+            <i class="fa fa-bell-o fa-4x"></i>
+            <i class="fa fa-arrow-right fa-3x"></i>
+            <i class="fa fa-envelope-o fa-4x"></i>
+
+        </div>
+        <div class="row text-center">
+            <span>Спасибо за регистрацию!<br> Проверьте пожалуйста вашу елетронную почту, вам выслан логин и пароль для входа.</span><br>
+            <a href="{{ path('homepage') }}" class="btn btn-info">Перейти на главную страницу</a>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {% javascripts 'myjs/*' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
