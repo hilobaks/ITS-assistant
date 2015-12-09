@@ -1,5 +1,5 @@
-<div class="modal fade bs-example-modal-sm" id="reg-modal" tabindex="-1" role="dialog" aria-labelledby="title-reg-modal" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+<div class="modal fade in" id="reg-modal" tabindex="-1" role="dialog" aria-labelledby="title-reg-modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -44,15 +44,25 @@
                         <label for="input-use-reason">Причина использования данного ресурса</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-question"></i></span>
-                            <textarea name="use-reason" class="form-control" id="input-use-reason" rows="5" required></textarea>
+                            <textarea name="use-reason" class="form-control" id="input-use-reason" rows="1" required></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-block btn-success">Отправить</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" style="float: right" data-dismiss="modal">Закрыть</button>
-                <button type="submit" class="btn btn-success" form="form-calc-IP" id="calc-IP" style="float: left">Посчитать</button>
+                <button type="submit" class="btn btn-block btn-success" form="registration-form">
+                    <div>
+                        <i class="fa fa-user-plus fa-lg "></i>
+                        <span>Отправить</span>
+                    </div>
+                    <div class="hidden">
+                        <i class="fa fa-refresh fa-spin fa-2x"></i>
+                    </div>
+                </button>
+                <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">
+                    <i class="fa fa-times-circle fa-lg "></i>
+                    <span>Закрыть</span>
+                </button>
             </div>
         </div>
     </div>

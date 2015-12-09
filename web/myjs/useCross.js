@@ -21,7 +21,7 @@ var useCross = {
                 },
                 error: function (Response_error) {
                     console.log(Response_error);
-                    defObj.reject();
+                    defObj.reject(Response_error);
                 }
             });
             return defObj.promise();

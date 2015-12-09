@@ -1,6 +1,6 @@
 #login-modal .modal-header {
 }
-#title-login-modal {
+#title-login-modal, #title-reg-modal {
     color:#08C;
     font-family: 'Comfortaa', cursive;
 }

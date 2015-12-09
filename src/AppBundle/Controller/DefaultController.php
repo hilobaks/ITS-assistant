@@ -159,12 +159,12 @@ class DefaultController extends Controller
     public function checkEmailAction(Request $request) {
         try {
             if($this->getUserByEmail($request)) {
-                return new JsonResponse(true);
+                return new JsonResponse(true, 404);
             } else {
-                return new JsonResponse(false);
+                return new JsonResponse(false, 200);
             }
         } catch(\Exception $error) {
-            return new JsonResponse('error connection database');
+            return new JsonResponse(false, 500);
         }
     }
 
