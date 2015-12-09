@@ -34,10 +34,10 @@ var useCross = {
             useCross.varS.forModalWindow.idModalWindow = 'tempModal';
             useCross.varS.forModalWindow.insertTitle.nodeValue = 'Ошибка';
         },
-        showModalWindow: function (obj) {
-            var variable = useCross.varS.forModalWindow;
-            var modalWindow = document.getElementById(variable.idModalWindow),
-                helpFunc = useCross.funcS;
+        showModalWindow: function () {
+            var helpFunc = useCross.funcS,
+                variable = useCross.varS.forModalWindow,
+                modalWindow = document.getElementById(variable.idModalWindow);
             if(variable.insertTitle.nodeValue != "" && variable.insertBody.innerHTML != "") {
                 var title = document.querySelector('#' + variable.idModalWindow + ' .modal-title'),
                     body = document.querySelector('#' + variable.idModalWindow + ' .modal-body');
@@ -109,14 +109,8 @@ var useCross = {
                     elem.classList.add('hidden')
                 }
             };
-            for(var i = 0; i < target.childElementCount; i++) {
-                if(target.children[i].nodeName.toLowerCase() === 'i') {
-                    doAction(target.children[i], actionForSpinner);
-                } else {
-                    doAction(target.children[i], actionForAnother);
-                }
-            }
-
+            doAction(target.getElementsByTagName('div')[0], actionForAnother);
+            doAction(target.getElementsByTagName('div')[1], actionForSpinner);
         }
     },
     varS: {

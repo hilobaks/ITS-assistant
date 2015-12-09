@@ -121,13 +121,18 @@ class DefaultController extends Controller
             $user = $this->getUserByEmail($request);
             $service_authorization = $this->get('authorization');
             $status = $service_authorization->check_login($user, $request);
-            switch ($status) {
+            switch ($status['message']) {
                 case $service_authorization::STATUS_OK :
                     $request->getSession()->set('full-name', $user->getFirstName().' '.$user->getSecondName());
                     $request->getSession()->set('authorization', true);
                     break;
             }
-            return new JsonResponse($status);
+            return new JsonResponse(
+                [
+                    'message' => $status['message'],
+                    'countTry' => $status['count_try']
+                ]
+            );
         }
     }
 

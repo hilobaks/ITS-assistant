@@ -19,17 +19,25 @@ class Authorization
     const STATUS_WRONG = 'wrong';
     const STATUS_BLOCKED = 'blocked';
     const STATUS_NOT_FOUND = 'not_found';
-
+    private static $count_try = 3;
 
     public function check_login($user, $request) {
+        if(self::$count_try < 3) {
+            return STATUS_BLOCKED;
+        }
+        self::$count_try--;
+        $response = [
+            'count_try' => self::$count_try
+        ];
         if($user) {
             if($user->getPassword() === $request->get('password')) {
-                return self::STATUS_OK;
+                $response['message'] = self::STATUS_OK;
             } else {
-                return self::STATUS_WRONG;
+                $response['message'] = self::STATUS_WRONG;
             }
         } else {
-            return self::STATUS_NOT_FOUND;
+            $response['message'] = self::STATUS_NOT_FOUND;
         }
+        return $response;
     }
 }

@@ -1,23 +1,9 @@
-html, body, .container {
-    height: 100%;
+#login-modal .modal-header {
 }
-label, h2 {
-    color: #204d74;
+#title-login-modal {
+    color:#08C;
+    font-family: 'Comfortaa', cursive;
 }
-.container {
-    padding-top:0;
-    padding-bottom:0;
-}
-.container > #parent-form {
-    top: 25%;
-    position: relative;
-}
-/*Надпись регистрация*/
-.container > div > .row:first-child > div > div {
-    margin-bottom: 15px;
-    border-bottom: 2px solid #204d74;
-}
-
-#temp-window {
+label {
     color: #204d74;
 }

@@ -3,14 +3,14 @@
  */
 (function() {
     var app = {
-
         initialize : function () {
             this.setUpListeners.call(this.eventHandlers, this.eventElement);
         },
         setUpListeners: function (eventElement) {
-            EventUtil.addHandler(eventElement.inputEmailRegistration, 'blur', this.checkUseEmail);
+            //EventUtil.addHandler(eventElement.inputEmailRegistration, 'blur', this.checkUseEmail);
             EventUtil.addHandler(eventElement.formEnterProfile, 'submit', this.checkUser);
             useCross.funcS.addEventOnElements(eventElement.inputRegistration, 'click', this.showStatusInput);
+            EventUtil.addHandler(eventElement.divAuthReg, 'click', this.showModalAuthAndReg);
         },
         eventHandlers : {
             checkUseEmail: function (event) {
@@ -53,48 +53,63 @@
                 app.helpFunc.checkInputValue(crossEvent);
             },
             checkUser: function (event) {
-                var crossEvent = EventUtil.getEvent(event),
-                    target = EventUtil.getTarget(crossEvent);
-                if(sessionStorage.getItem('send_info') === true) {
-                    crossEvent.preventDefault();
-                    var crossFunc = useCross.funcS,
-                        crossVar = useCross.varS;
-                    var inputEmail = document.querySelector('#authorization-form #input-email'),
-                        inputPassword = document.querySelector('#authorization-form #input-password'),
-                        buttonSubmit = document.querySelector('#authorization-form button:last-child');
-                    var promise = crossFunc.sendAjaxRequest('/sing_in', {
-                        'email' : inputEmail.value,
-                        'password' : inputPassword.value
-                    });
-                    promise
-                        .then(
-                            function (status) {
-                                if(status.message === 'password correct') {
-
-                                } else if(status.message === 'password incorrect') {
-                                    crossVar.forModalWindow.insertBody.innerHTML = 'Вы ввели не правильный пароль. У вас осталось ' + status.countTry + ' попыток.';
-                                } else if(status.message === 'don`t find user') {
-                                    crossVar.forModalWindow.insertBody.innerHTML = 'Пользователя с таким email не существует.';
+                event = EventUtil.getEvent(event);
+                event.preventDefault();
+                var inputEmail = document.querySelector('#auth-form #input-email'),
+                    inputPassword = document.querySelector('#auth-form #input-password'),
+                    buttonSubmit = document.querySelector('#login-modal .modal-footer button[type="submit"]');
+                useCross.funcS.sendAjaxRequest('/sign_in', {
+                    'email' : inputEmail.value,
+                    'password' : inputPassword.value
+                })
+                    .then(
+                        function (status) {
+                            if(status.message === 'password correct') {
+                                EventUtil.removeHandler(this, 'submit', arguments.callee);
+                            } else {
+                                useCross.funcS.showFailResponse();
+                                if(status.message === 'password incorrect') {
+                                    useCross.varS.forModalWindow.insertBody.innerHTML = 'Вы ввели не правильный пароль. У вас осталось ' + status.countTry + ' попыток.';
+                                } else if(status.message === 'not_found') {
+                                    useCross.varS.forModalWindow.insertBody.innerHTML = 'Пользователя с таким email не существует.';
+                                } else if(status.message === 'blocked') {
+                                    useCross.varS.forModalWindow.insertBody.innerHTML = 'Вы 3-и раха ввели не правильный пароль. Ответьте на вопрос и повторите попытку заново.';
                                 }
-                            },
-                            function () {
-                                crossFunc.showErrorConnection();
-                            },
-                            function () {
-                                crossFunc.showProgress(buttonSubmit, 'show');
                             }
-                        )
-                        .always(function () {
-                            crossFunc.showProgress(buttonSubmit, 'hide');
-                            crossFunc.showModalWindow();
-                        });
+                        },
+                        function () {
+                            useCross.funcS.showErrorConnection();
+                        },
+                        function () {
+                            useCross.funcS.showProgress(buttonSubmit, 'show');
+                        }
+                    )
+                    .always(function () {
+                        useCross.funcS.showProgress(buttonSubmit, 'hide');
+                        useCross.funcS.showModalWindow();
+                    });
+
+            },
+            showModalAuthAndReg: function (event) {
+                event = EventUtil.getEvent(event);
+                switch(EventUtil.getTarget(event).id) {
+                    case "login-button":
+                        useCross.varS.forModalWindow.idModalWindow = 'login-modal';
+                        break;
+                    case "registration-button":
+                        useCross.varS.forModalWindow.idModalWindow = 'reg-modal';
+                        break;
                 }
+                useCross.funcS.showModalWindow();
             }
         },
         eventElement: {
             inputEmailRegistration: document.querySelector('#registration-form #input-email'),
-            formEnterProfile: document.getElementById('#authorization-form'),
-            inputRegistration: document.querySelectorAll('#registration-form input')
+            formEnterProfile: document.getElementById('auth-form'),
+            inputRegistration: document.querySelectorAll('#registration-form input'),
+            buttonOpenLogin : document.getElementById('login-button'),
+            buttonOpenRegistration : document.getElementById('registration-button'),
+            divAuthReg : document.getElementById('div-auth-reg')
         },
         helpFunc: {
             checkInputValue: function (crossEvent) {

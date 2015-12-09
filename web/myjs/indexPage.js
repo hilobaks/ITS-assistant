@@ -103,7 +103,7 @@
         eventElement: {
             ulApp : document.querySelector('#open-app-button'),
             formCalcIP : document.querySelector('#form-calc-IP'),
-            inputMaskSubNetwork : document.getElementById('mask-sub-network'),
+            inputMaskSubNetwork : document.getElementById('mask-sub-network')
         },
         helpFunc: {
             showModal: function (modalWindow) {
