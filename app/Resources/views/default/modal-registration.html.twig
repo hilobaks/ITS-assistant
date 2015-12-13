@@ -1,0 +1,69 @@
+<div class="modal fade in" id="reg-modal" tabindex="-1" role="dialog" aria-labelledby="title-reg-modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="title-reg-modal">Регистрация</h2>
+            </div>
+            <div class="modal-body">
+                <form role="form" action="{{ path('sign_up') }}" id="registration-form" name="reg-form" method="post">
+                    <div class="form-group">
+                        <label for="input-first-name">Имя</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text"  class="form-control" id="input-first-name" name="first-name" placeholder="Введите Ваше имя" pattern="[А-ЯІ]?[а-яі]+[-]?[А-ЯІ]?[а-яі]{0,15}" required>
+                            <span class="glyphicon form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-second-name">Фамилия</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control" id="input-second-name" name="second-name" pattern="[А-ЯІ]?[а-яі]+[-]?[А-ЯІ]?[а-яі]{0,15}" required placeholder="Введите Вашу фамилию">
+                            <span class="glyphicon form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-patronymic">Отчество</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control" id="input-patronymic" name="patronymic" pattern="[А-ЯІ]?[а-яі]+[-]?[А-ЯІ]?[а-яі]{0,15}" required placeholder="Введите Ваше отчество">
+                            <span class="glyphicon form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-email">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            {# Реализовать проверку js #}
+                            <input type="email" class="form-control" name="email" pattern="^.+@.+\..{2,}$"  id="input-email" required placeholder="Введите Ваш e-mail">
+                            <span class="glyphicon form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-use-reason">Причина использования данного ресурса</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-question"></i></span>
+                            <textarea name="use-reason" class="form-control" id="input-use-reason" rows="1" required></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-block btn-success" form="registration-form">
+                    <div>
+                        <i class="fa fa-user-plus fa-lg "></i>
+                        <span>Отправить</span>
+                    </div>
+                    <div class="hidden">
+                        <i class="fa fa-refresh fa-spin fa-2x"></i>
+                    </div>
+                </button>
+                <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">
+                    <i class="fa fa-times-circle fa-lg "></i>
+                    <span>Закрыть</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

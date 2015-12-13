@@ -1,9 +1,11 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/book/service_container.html
+imports:
+    - { resource: "../Resources/config/services.yml" }
 parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    authorization:
+        class:        AppBundle\Service\Authorization
+        arguments:    ["@doctrine.orm.default_entity_manager"]

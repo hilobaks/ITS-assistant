@@ -1,0 +1,9 @@
+#login-modal .modal-header {
+}
+#title-login-modal, #title-reg-modal {
+    color:#08C;
+    font-family: 'Comfortaa', cursive;
+}
+label {
+    color: #204d74;
+}
