@@ -9,16 +9,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>ITS-assistant</title>
         <!-- Bootstrap -->
-        {% stylesheets
-            '@bootstrap_css'
-            'mycss/AnimatedBorderMenu/*'
-        %}
+        {% stylesheets '@bootstrap_css' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
+            <link href='https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'/>
         {% endstylesheets %}
-        {% javascripts 'myjs/AnimatedBorderMenu/modernizr.custom.js'%}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         {% block stylesheets %}{% endblock %}
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,12 +26,8 @@
         {% block body %}{% endblock %}
         {% javascripts
             '@jquery'
-            '@bootstrap_js' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-        {% javascripts
-            'myjs/AnimatedBorderMenu/classie.js'
-            'myjs/AnimatedBorderMenu/borderMenu.js'
+            '@bootstrap_js'
+            'myjs/useCross.js'
         %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}

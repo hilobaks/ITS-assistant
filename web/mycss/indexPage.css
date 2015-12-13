@@ -1,19 +1,13 @@
-html, body, .container-fluid, #card-carno, #diagrams-volpera-smita, #ip-calculator, #master-report {
+html, body, #card-carno, #diagrams-volpera-smita, #ip-calculator, #master-report {
     height: 100%;
 }
-/*Логотип*/
-.container-fluid > div:first-child {
-    position: absolute;
-    top: 32%;
-    left: 30%;
-    z-index: 1000;
+.fa {
+    cursor: default;
 }
-.container-fluid > div:first-child > h1 {
-    color: white;
-    font-size: 7vw;
-    font-family: 'Lobster', cursive;
-    z-index: 1000;
+.container-fluid {
+    height: 80%;
 }
+
 #bt-menu {
     z-index: 1000;
 }
@@ -56,8 +50,54 @@ nav#bt-menu a.fa-sign-in {
     height: 50px;
     cursor: pointer;
 }
-nav#bt-menu a.fa-sign-in:hover {  text-decoration: none;}
-nav#bt-menu a.fa-sign-in:hover::before {
+nav#bt-menu a.fa-sign-in:hover,
+nav#bt-menu a.fa-user-plus:hover {
+    text-decoration: none;
+}
+nav#bt-menu a.fa-sign-in:hover::before,
+nav#bt-menu a.fa-user-plus:hover::before {
     transition: .4s ease-out;
-    color: #2aabd2;
+    color: tomato;
+}
+
+/*Регистрация*/
+nav#bt-menu a.fa-user-plus {
+    position: fixed;
+    right: 20px;
+    bottom: 125px;
+    z-index: 100;
+    display: block;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+/*Футер*/
+footer {
+    height: 20%;
+    background-color: rgba(0, 0, 0, 0.7);
+    /*margin-top: 100%;*/
+    color: #0088CC;
+}
+
+/*Логотипы соц сетей*/
+#social-network > span {
+    margin: 1em;
+}
+#social-network .fa-stack:hover {
+    font-size: 2em;
+    transition: 0.5s;
+    color: #00AA88;
+    margin: 0 0.35em;
+}
+
+/*Логотип*/
+.container-fluid > div:first-child {
+    margin-top: 10%;
+}
+.container-fluid > div:first-child > h1 {
+    font-size: 7vw;
+    font-family: 'Lobster', cursive;
+    z-index: 1000;
+    color:#0088CC;
 }
