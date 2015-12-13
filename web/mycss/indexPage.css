@@ -44,3 +44,20 @@ nav#bt-menu .fa::before {
 #bt-menu.bt-menu ul:nth-of-type(2) a.fa-facebook::before {  color: #0000F0  }
 #bt-menu.bt-menu ul:nth-of-type(2) a.fa-google-plus::before {  color: red  }
 #bt-menu.bt-menu ul:nth-of-type(2) li .fa:hover::before {  color: #0000F0  }
+
+/*Вход*/
+nav#bt-menu a.fa-sign-in {
+    position: fixed;
+    right: 20px;
+    bottom: 70px;
+    z-index: 100;
+    display: block;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+nav#bt-menu a.fa-sign-in:hover {  text-decoration: none;}
+nav#bt-menu a.fa-sign-in:hover::before {
+    transition: .4s ease-out;
+    color: #2aabd2;
+}
