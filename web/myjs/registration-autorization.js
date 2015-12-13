@@ -7,31 +7,36 @@
             this.setUpListeners.call(this.eventHandlers, this.eventElement);
         },
         setUpListeners: function (eventElement) {
-            EventUtil.addHandler(eventElement.inputEmailRegistration, 'blur', this.checkUseEmail);
+            EventUtil.addHandler(eventElement.inputEmailRegistration, 'change', this.checkUseEmail);
             EventUtil.addHandler(eventElement.formEnterProfile, 'submit', this.checkUser);
-            forAllPage.funcS.addEventOnElements(eventElement.inputRegistration, 'click', this.showStatusInput);
+            forAllPage.funcS.addEventOnElements(eventElement.inputRegistration, 'blur', this.showStatusInput);
             EventUtil.addHandler(eventElement.divAuthReg, 'click', this.showModalAuthAndReg);
         },
         eventHandlers : {
             checkUseEmail: function (event) {
                 event = EventUtil.getEvent(event);
                 var buttonSubmit = document.querySelector('button[form="registration-form"]');
-                var email = document.getElementById('input-email');
+                var email = document.querySelector('#registration-form #input-email');
                 forAllPage.funcS.sendAjaxRequest('/check_email', {
-                    'email': email.value
+                    'email': this.value
                 })
                     .then(
                         function (emailExist) {
                             if(emailExist) {
-                                if(app.helpFunc.checkInputsValue(email)) {
-                                    forAllPage.varS.forModalWindow.action = false;
-                                } else {
-                                    document.forms['reg-form'].elements['email'].reset();
-                                }
+                                app.helpFunc.showCorrectInput('success', email);
+                                forAllPage.varS.forModalWindow.action = false;
+                                buttonSubmit.type = 'submit';
                             }
                         },
                         function (error) {
-                            forAllPage.funcS.showFailResponse(error);
+                            app.helpFunc.showCorrectInput('error', email, {
+                                text : 'Введите другой email',
+                                action: true
+                            });
+                            forAllPage.funcS.showFailResponse(error, {
+                                403: 'Пользователь с данным email уже существует.'
+                            });
+                            buttonSubmit.type = 'button';
                         },
                         function () {
                             forAllPage.funcS.showProgress(buttonSubmit, 'show');
@@ -58,7 +63,7 @@
                 })
                     .then(
                         function (status) {
-                            if(status === 'ok') {
+                            if(status) {
                                 app.eventElement.formEnterProfile.submit();
                                 //EventUtil.removeHandler(this, 'submit', arguments.callee);
                             } else if(status === '') {
@@ -99,7 +104,7 @@
         eventElement: {
             inputEmailRegistration: document.querySelector('#registration-form #input-email'),
             formEnterProfile: document.getElementById('auth-form'),
-            inputRegistration: document.querySelectorAll('#registration-form input'),
+            inputRegistration: document.querySelectorAll('#registration-form input:not(#input-email)'),
             buttonOpenLogin : document.getElementById('login-button'),
             buttonOpenRegistration : document.getElementById('registration-button'),
             divAuthReg : document.getElementById('div-auth-reg')
@@ -107,25 +112,6 @@
         helpFunc: {
             checkInputsValue: function (elem) {
                 var valid = true;
-                var correct = function (command, elem, message) {
-                    var formGroup = elem.parentNode.parentNode,
-                        label = formGroup.getElementsByTagName('label')[0],
-                        formGlyficon = formGroup.getElementsByClassName('form-control-feedback')[0];
-                    if(command === 'error') {
-                        $(elem).tooltip({
-                            title : message
-                        }).tooltip('show');
-                        formGroup.classList.remove('has-success');
-                        formGroup.classList.add('has-error');
-                        formGlyficon.classList.remove('glyphicon-ok');
-                        formGlyficon.classList.add('glyphicon-remove');
-                    } else if(command === 'success') {
-                        formGroup.classList.remove('has-error');
-                        formGroup.classList.add('has-success');
-                        formGlyficon.classList.remove('glyphicon-remove');
-                        formGlyficon.classList.add('glyphicon-ok');
-                    }
-                };
                 var inputs = [];
                 if(!elem.length) {
                     inputs.push(elem);
@@ -136,27 +122,57 @@
                     if(inputs[i].value.length != 0) {
                         switch(inputs[i].attributes.id) {
                             case "input-email" :
-                                if((/^.+@.+\..+$/).test(inputs[i].value)) {
-                                    correct('success', inputs[i]);
+                                if((/^.+@.+\..{2,}$/).test(inputs[i].value)) {
+                                    app.helpFunc.showCorrectInput('success', inputs[i]);
                                     valid = true;
                                 } else {
-                                    correct('error', inputs[i], 'Некоректный ввод email');
+                                    app.helpFunc.showCorrectInput('error', inputs[i], 'Некоректный ввод');
                                     valid = false;
                                 }
                                 break;
-                            case "" :
-                                break;
                             default :
-                                correct('success', inputs[i]);
+                                if(inputs[i].checkValidity()) {
+                                    app.helpFunc.showCorrectInput('success', inputs[i]);
+                                } else {
+                                    app.helpFunc.showCorrectInput('error', inputs[i]);
+                                }
                         }
-
                     } else {
-                        correct('error', inputs[i], 'Введите' + label.value);
+                        app.helpFunc.showCorrectInput('error', inputs[i]);
                         valid = false
                     }
                 }
 
                 return valid;
+            },
+            showCorrectInput: function (command, elem, message) {
+                var formGroup = elem.parentNode.parentNode,
+                    label = formGroup.getElementsByTagName('label')[0],
+                    formGlyficon = formGroup.getElementsByClassName('form-control-feedback')[0];
+                if(command === 'error') {
+                    if(message === undefined) {
+                        message = 'Введите ' + forAllPage.funcS.crossInnerText(label, 'get');
+                    } else {
+                        if(message.action) {
+                            message =  message.text;
+                        } else {
+                            message = message + forAllPage.funcS.crossInnerText(label, 'get');
+                        }
+                    }
+                    $(elem).tooltip({
+                        title : message
+                    }).tooltip('show');
+                    formGroup.classList.remove('has-success');
+                    formGroup.classList.add('has-error');
+                    formGlyficon.classList.remove('glyphicon-ok');
+                    formGlyficon.classList.add('glyphicon-remove');
+                } else if(command === 'success') {
+                    $(elem).tooltip('destroy');
+                    formGroup.classList.remove('has-error');
+                    formGroup.classList.add('has-success');
+                    formGlyficon.classList.remove('glyphicon-remove');
+                    formGlyficon.classList.add('glyphicon-ok');
+                }
             }
         },
         variable: {

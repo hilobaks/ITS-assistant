@@ -13,66 +13,105 @@
     {% endjavascripts %}
 {% endblock %}
 {% block body %}
-    {% if authorization is defined  %}
-        <nav id="bt-menu" class="bt-menu">
-        <a href="#" class="bt-menu-trigger" title="Меню"><span>Menu</span></a>
-        <a href="{{ path('registration') }}" class="fa fa-user-plus fa-3x" style="font-size: 3.3em;" title="Регистрация"><span></span></a>
-        <a href="{{ path('login') }}" class="fa fa-sign-in fa-4x" title="Войти"><span></span></a>
-        <ul id="open-app-button">
-            <li><a href="" class="fa fa-calculator fa-3x" id="open-ip-calc"  title="IP-калькулятор"></a></li>
-            <li><a href="" class="fa fa-file-text-o fa-3x" id="open-master-report" title="Мастер-отчетов"></a></li>
-            <li><a href="" class="fa fa-sitemap fa-3x" id="open-card-carno" title="Карты Карно"></a></li>
-            <li><a href="" class="fa fa-anchor fa-3x" id="open-diagram" title="Диаграма Вольпера-Смитта"></a></li>
-        </ul>
-        <ul>
-            <li><a href="#" class="fa fa-refresh" title="Обновить"></a></li>
-            <li><a href="#" class="fa fa-comment" title="Обратная связь"></a></li>
+    {% if auth != true%}
+        {% stylesheets 'mycss/indexPage.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+        <div class="container-fluid">
+            <div class="row text-center">
+                <h1 id="name-app">ITS-assistant</h1>
+            </div>
+            <div class="row text-center" id="div-auth-reg">
+                <button href="{{ path('login') }}" class="btn-success btn" id="login-button">
+                    <i class="fa fa-sign-in fa-lg"></i>
+                    <span>Войти</span>
+                </button>
+                <button class="btn btn-warning" id="registration-button">
+                    <i class="fa fa-user-plus fa-lg"></i>
+                    <span>Регистрация</span>
+                </button>
+            </div>
+        </div>
+        <footer class="text-center">
+            <div id="social-network">
+        <span class="fa-stack fa-lg">
+            <i class="fa fa-square-o fa-stack-2x"></i>
+            <i class="fa fa-vk fa-stack-1x"></i>
+        </span>
+        <span class="fa-stack fa-lg">
+            <i class="fa fa-square-o fa-stack-2x"></i>
+            <i class="fa fa-facebook fa-stack-1x"></i>
+        </span>
+        <span class="fa-stack fa-lg">
+            <i class="fa fa-square-o fa-stack-2x"></i>
+            <i class="fa fa-google-plus fa-stack-1x"></i>
+        </span>
+            </div>
+            <div class="contacts-author">
+                <address>
+                    <strong>Email</strong><br>
+                    <a href="mailto:#">hilobaks@outlook.com</a>
+                </address>
+            </div>
+        </footer>
+        {% include(':default:modal-login.html.twig') %}
+        {% include(':default:modal-registration.html.twig') %}
+    {% else %}
+        {% stylesheets 'mycss/profile.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+        <div class="container-fluid">
+            <nav id="bt-menu" class="bt-menu">
+                <a href="#" class="bt-menu-trigger" title="Меню"><span>Menu</span></a>
+                <ul id="open-app-button">
+                    <li><a href="" class="fa fa-calculator fa-3x" id="open-ip-calc"  title="IP-калькулятор"></a></li>
+                    <li><a href="" class="fa fa-file-text-o fa-3x" id="open-master-report" title="Мастер-отчетов"></a></li>
+                    <li><a href="" class="fa fa-sitemap fa-3x" id="open-card-carno" title="Карты Карно"></a></li>
+                    <li><a href="" class="fa fa-anchor fa-3x" id="open-diagram" title="Диаграма Вольпера-Смитта"></a></li>
+                </ul>
+                <ul>
+                    <li><a href="#" class="fa fa-refresh" title="Обновить"></a></li>
+                    <li><a href="#" class="fa fa-comment" title="Обратная связь"></a></li>
 
-            {#<li><a href="#" class="fa fa-vk fa-3x">VK</a></li>#}
-            {#<li><a href="#" class="fa fa-facebook fa-3x">Facebook</a></li>#}
-            {#<li><a href="#" class="fa fa-google-plus fa-3x">Google+</a></li>#}
-        </ul>
-    </nav>
+                    {#<li><a href="#" class="fa fa-vk fa-3x">VK</a></li>#}
+                    {#<li><a href="#" class="fa fa-facebook fa-3x">Facebook</a></li>#}
+                    {#<li><a href="#" class="fa fa-google-plus fa-3x">Google+</a></li>#}
+                </ul>
+            </nav>
+            <div class="row" style="height: 50%">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="card-carno" style=" background: url({{ asset('/myimg/card-carno.jpg') }}) no-repeat; background-size: 100% 100%;">
+                    <div class="row" style="height: 100%;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 app" >
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="diagrams-volpera-smita" style=" background: url({{ asset('/myimg/diagrams.jpg') }}) no-repeat; background-size: cover;">
+                    <div class="row" style="height: 100%;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 app">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="height: 50%">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="ip-calculator" style=" background: url({{ asset('/myimg/network.jpg') }}) no-repeat; background-size: cover;">
+                    <div class="row" style="height: 100%;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 app" >
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="master-report" style=" background: url({{ asset('/myimg/report.png') }}) no-repeat; background-size: cover">
+                    <div class="row" style="height: 100%;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 app">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endif %}
-    <div class="container-fluid">
-        <div class="row text-center">
-            <h1 id="name-app">ITS-assistant</h1>
-        </div>
-        <div class="row text-center" id="div-auth-reg">
-            <button href="{{ path('login') }}" class="btn-success btn" id="login-button">
-                <i class="fa fa-sign-in fa-lg"></i>
-                <span>Войти</span>
-            </button>
-            <button class="btn btn-warning" id="registration-button">
-                <i class="fa fa-user-plus fa-lg"></i>
-                <span>Регистрация</span>
-            </button>
-        </div>
-    </div>
-    <footer class="text-center">
-        <div id="social-network">
-            <span class="fa-stack fa-lg">
-                <i class="fa fa-square-o fa-stack-2x"></i>
-                <i class="fa fa-vk fa-stack-1x"></i>
-            </span>
-            <span class="fa-stack fa-lg">
-                <i class="fa fa-square-o fa-stack-2x"></i>
-                <i class="fa fa-facebook fa-stack-1x"></i>
-            </span>
-            <span class="fa-stack fa-lg">
-                <i class="fa fa-square-o fa-stack-2x"></i>
-                <i class="fa fa-google-plus fa-stack-1x"></i>
-            </span>
-        </div>
-        <div class="contacts-author">
-            <address>
-                <strong>Email</strong><br>
-                <a href="mailto:#">hilobaks@outlook.com</a>
-            </address>
-        </div>
-    </footer>
-    {% include(':default:modal-login.html.twig') %}
-    {% include(':default:modal-registration.html.twig') %}
     {% include(':default:temp-modal-window.html.twig') %}
 {% endblock %}
 {% block javascripts %}

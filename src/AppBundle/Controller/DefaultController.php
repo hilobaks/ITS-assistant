@@ -20,10 +20,12 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-        ));
+        return $this->render(
+            'default/index.html.twig',
+            [
+                'auth' => false
+            ]
+        );
     }
 
     /**
@@ -110,12 +112,13 @@ class DefaultController extends Controller
      */
     public function signInAction(Request $request)
     {
-        $status_authorization = $request->getSession()->get('authorization');
+        $status_authorization = $request->getSession()->get('auth');
         if($status_authorization) {
-            return $this->render('default/index.html.twig' ,
+            return $this->render(
+                 ':default:index.html.twig' ,
                  [
-                     'authorization' => $status_authorization,
-                     'full_name' => $request->getSession()->get('full')
+                     'auth' => $status_authorization,
+                     'full_name' => $request->getSession()->get('full-name')
                  ]
                 );
         } else {
@@ -126,7 +129,7 @@ class DefaultController extends Controller
                 switch ($status) {
                     case $auth_service::STATUS_OK :
                         $request->getSession()->set('full-name', $user->getFirstName().' '.$user->getSecondName());
-                        $request->getSession()->set('authorization', true);
+                        $request->getSession()->set('auth', true);
                         return new JsonResponse(true, 200);
                         break;
                     case $auth_service::STATUS_WRONG :
@@ -166,15 +169,14 @@ class DefaultController extends Controller
      * @return Response
      */
     public function checkEmailAction(Request $request) {
-        $auth_service = $this->get('authorization');
         try {
-            if(!($auth_service->getUserByEmail($request->get('email')))) {
+            if(!($this->get('authorization')->getUserByEmail($request->get('email')))) {
                 return new JsonResponse(true, 200);
             } else {
-                return new JsonResponse(false, 423);
+                return new JsonResponse(false, 403);
             }
-        } catch(\Exception $error) {
-            return new JsonResponse(false, 500);
+        } catch(HttpException $error) {
+            return new JsonResponse(false, $error->getStatusCode());
         }
     }
 
