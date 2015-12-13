@@ -4,11 +4,9 @@
 (function() {
     var app = {
         initialize : function () {
-            this.setUpListeners.call(this.eventHandlers);
+            this.setUpListeners.call(this.eventHandlers, this.eventElement);
         },
-
-        setUpListeners: function () {
-            var eventElement = app.eventElement;
+        setUpListeners: function (eventElement) {
             EventUtil.addHandler(eventElement.inputMaskSubNetwork, 'click', this.selectTypeMask);
             EventUtil.addHandler(eventElement.ulApp, 'click', this.checkShowModal);
             EventUtil.addHandler(eventElement.formCalcIP, 'submit', this.ipCalc);
@@ -26,16 +24,20 @@
                 var target = EventUtil.getTarget(event);
                 switch(target.id) {
                     case "open-ip-calc":
-                        app.helpFunc.showModal('#ip-calc-modal');
+                        forAllPage.varS.forModalWindow.idModalWindow = 'ip-calc-modal';
+                        forAllPage.funcS.showModalWindow();
                         break;
                     case "open-master-report":
-                        app.helpFunc.showModal('#master-report-modal');
+                        forAllPage.varS.forModalWindow.idModalWindow = 'master-report-modal';
+                        forAllPage.funcS.showModalWindow('#master-report-modal');
                         break;
                     case "open-card-carno":
-                        app.helpFunc.showModal('#card-carno-modal');
+                        forAllPage.varS.forModalWindow.idModalWindow = '';
+                        forAllPage.funcS.showModalWindow('#card-carno-modal');
                         break;
                     case "open-diagram":
-                        app.helpFunc.showModal('#diagram-modal');
+                        forAllPage.varS.forModalWindow.idModalWindow = '';
+                        forAllPage.funcS.showModalWindow('#diagram-modal');
                         break;
                 }
             },

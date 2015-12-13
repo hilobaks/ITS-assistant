@@ -111,6 +111,15 @@
                 </div>
             </div>
         </div>
+        {% include(':default:ip-calc.html.twig') %}
+        {% javascripts
+            'myjs/AnimatedBorderMenu/classie.js'
+            'myjs/AnimatedBorderMenu/borderMenu.js'
+            'myjs/indexPage.js'
+            'myjs/ip-calc.js'
+        %}
+            <script defer src="{{ asset_url }}"></script>
+        {% endjavascripts %}
     {% endif %}
     {% include(':default:temp-modal-window.html.twig') %}
 {% endblock %}
@@ -119,8 +128,6 @@
         'myjs/detect-browser.js'
         'myjs/cross-event.js'
         'myjs/useCross.js'
-        'myjs/AnimatedBorderMenu/classie.js'
-        'myjs/AnimatedBorderMenu/borderMenu.js'
         'myjs/registration-autorization.js'
     %}
         <script src="{{ asset_url }}"></script>
