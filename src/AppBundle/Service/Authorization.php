@@ -8,10 +8,8 @@
 
 namespace AppBundle\Service;
 
-use AppBundle\Entity\FiscalData;
-use AppBundle\Entity\FiscalRequest;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\Validator\Constraints\DateTime;
+use \Doctrine\ORM\EntityManager;
+use AppBundle\Entity\Users;
 
 class Authorization
 {
@@ -20,24 +18,33 @@ class Authorization
     const STATUS_BLOCKED = 'blocked';
     const STATUS_NOT_FOUND = 'not_found';
     private static $count_try = 3;
+    private $em;
+
+    public function __construct(EntityManager $entityManager) {
+        $this->em = $entityManager;
+    }
 
     public function check_login($user, $request) {
-        if(self::$count_try < 3) {
-            return STATUS_BLOCKED;
+        if(self::$count_try < 1) {
+            return self::STATUS_BLOCKED;
+        } else {
+            self::$count_try--;
         }
-        self::$count_try--;
-        $response = [
-            'count_try' => self::$count_try
-        ];
         if($user) {
             if($user->getPassword() === $request->get('password')) {
-                $response['message'] = self::STATUS_OK;
+                return self::STATUS_OK;
             } else {
-                $response['message'] = self::STATUS_WRONG;
+                return self::STATUS_WRONG;
             }
         } else {
-            $response['message'] = self::STATUS_NOT_FOUND;
+            return self::STATUS_NOT_FOUND;
         }
-        return $response;
+    }
+
+    public function getUserByEmail($email) {
+        $user = $this->em
+            ->getRepository('AppBundle:Users')
+            ->findOneBy(['email' => $email]);
+        return $user;
     }
 }

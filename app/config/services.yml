@@ -4,3 +4,8 @@ imports:
     - { resource: "../Resources/config/services.yml" }
 parameters:
 #    parameter_name: value
+
+services:
+    authorization:
+        class:        AppBundle\Service\Authorization
+        arguments:    ["@doctrine.orm.default_entity_manager"]

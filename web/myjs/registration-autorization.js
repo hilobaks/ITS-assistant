@@ -9,55 +9,42 @@
         setUpListeners: function (eventElement) {
             EventUtil.addHandler(eventElement.inputEmailRegistration, 'blur', this.checkUseEmail);
             EventUtil.addHandler(eventElement.formEnterProfile, 'submit', this.checkUser);
-            useCross.funcS.addEventOnElements(eventElement.inputRegistration, 'click', this.showStatusInput);
+            forAllPage.funcS.addEventOnElements(eventElement.inputRegistration, 'click', this.showStatusInput);
             EventUtil.addHandler(eventElement.divAuthReg, 'click', this.showModalAuthAndReg);
-            EventUtil.addHandler(eventElement.submitRegButton, 'click', this.showModalAuthAndReg);
         },
         eventHandlers : {
             checkUseEmail: function (event) {
-                var crossEvent = EventUtil.getEvent(event);
+                event = EventUtil.getEvent(event);
                 var buttonSubmit = document.querySelector('button[form="registration-form"]');
                 var email = document.getElementById('input-email');
-                var promise = useCross.funcS.sendAjaxRequest('/check_email', {
+                forAllPage.funcS.sendAjaxRequest('/check_email', {
                     'email': email.value
-                });
-                promise
+                })
                     .then(
                         function (emailExist) {
-                            if(!emailExist) {
-                                app.helpFunc.checkInputsValue(email);
-                            } else {
-                                if(emailExist === true) {
-                                    useCross.funcS.showFailResponse();
-                                    useCross.varS.forModalWindow.insertBody.innerHTML = '';
-                                    email.value = '';
-                                    app.helpFunc.checkInputsValue(email);
+                            if(emailExist) {
+                                if(app.helpFunc.checkInputsValue(email)) {
+                                    forAllPage.varS.forModalWindow.action = false;
+                                } else {
+                                    document.forms['reg-form'].elements['email'].reset();
                                 }
                             }
                         },
                         function (error) {
-                            useCross.funcS.showErrorConnection();
-                            switch(error.status) {
-                                case "500":
-                                    useCross.varS.forModalWindow.insertBody.innerHTML = 'Ошибка соеденения с базой данных.';
-                                    break;
-                                case "404":
-                                    useCross.varS.forModalWindow.insertBody.innerHTML = 'Пользователь с данным email уже существует. Введите другой email';
-                                    break;
-                            }
+                            forAllPage.funcS.showFailResponse(error);
                         },
                         function () {
-                            useCross.funcS.showProgress(buttonSubmit, 'show');
+                            forAllPage.funcS.showProgress(buttonSubmit, 'show');
                         }
                     )
                     .always(function () {
-                        useCross.funcS.showProgress(buttonSubmit, 'hide');
-                        useCross.funcS.showModalWindow();
+                        forAllPage.funcS.showProgress(buttonSubmit, 'hide');
+                        forAllPage.funcS.showModalWindow();
                     });
             },
             showStatusInput: function (event) {
-                var crossEvent = EventUtil.getEvent(event);
-                app.helpFunc.checkInputValue(crossEvent);
+                event = EventUtil.getEvent(event);
+                app.helpFunc.checkInputsValue(EventUtil.getCurrentTarget(event));
             },
             checkUser: function (event) {
                 event = EventUtil.getEvent(event);
@@ -65,35 +52,34 @@
                 var inputEmail = document.querySelector('#auth-form #input-email'),
                     inputPassword = document.querySelector('#auth-form #input-password'),
                     buttonSubmit = document.querySelector('#login-modal .modal-footer button[type="submit"]');
-                useCross.funcS.sendAjaxRequest('/sign_in', {
+                forAllPage.funcS.sendAjaxRequest('/sign_in', {
                     'email' : inputEmail.value,
                     'password' : inputPassword.value
                 })
                     .then(
                         function (status) {
-                            if(status.message === 'password correct') {
-                                EventUtil.removeHandler(this, 'submit', arguments.callee);
-                            } else {
-                                useCross.funcS.showFailResponse();
-                                if(status.message === 'password incorrect') {
-                                    useCross.varS.forModalWindow.insertBody.innerHTML = 'Вы ввели не правильный пароль. У вас осталось ' + status.countTry + ' попыток.';
-                                } else if(status.message === 'not_found') {
-                                    useCross.varS.forModalWindow.insertBody.innerHTML = 'Пользователя с таким email не существует.';
-                                } else if(status.message === 'blocked') {
-                                    useCross.varS.forModalWindow.insertBody.innerHTML = 'Вы 3-и раха ввели не правильный пароль. Ответьте на вопрос и повторите попытку заново.';
-                                }
+                            if(status === 'ok') {
+                                app.eventElement.formEnterProfile.submit();
+                                //EventUtil.removeHandler(this, 'submit', arguments.callee);
+                            } else if(status === '') {
+                                forAllPage.funcS.showFailResponse('');
                             }
                         },
-                        function () {
-                            useCross.funcS.showErrorConnection();
+                        function (error) {
+                            var messages = {
+                                404: 'Пользователь с данным email не найден.',
+                                403: 'Вы ввели неправильный пароль.',
+                                423: "Вы три раза ввели неправильный пароль. Ответьте на вопрос перед тем как потворить попытку."
+                            };
+                            forAllPage.funcS.showFailResponse(error, messages);
                         },
                         function () {
-                            useCross.funcS.showProgress(buttonSubmit, 'show');
+                            forAllPage.funcS.showProgress(buttonSubmit, 'show');
                         }
                     )
                     .always(function () {
-                        useCross.funcS.showProgress(buttonSubmit, 'hide');
-                        useCross.funcS.showModalWindow();
+                        forAllPage.funcS.showProgress(buttonSubmit, 'hide');
+                        forAllPage.funcS.showModalWindow();
                     });
 
             },
@@ -101,13 +87,13 @@
                 event = EventUtil.getEvent(event);
                 switch(EventUtil.getTarget(event).id) {
                     case "login-button":
-                        useCross.varS.forModalWindow.idModalWindow = 'login-modal';
+                        forAllPage.varS.forModalWindow.idModalWindow = 'login-modal';
                         break;
                     case "registration-button":
-                        useCross.varS.forModalWindow.idModalWindow = 'reg-modal';
+                        forAllPage.varS.forModalWindow.idModalWindow = 'reg-modal';
                         break;
                 }
-                useCross.funcS.showModalWindow();
+                forAllPage.funcS.showModalWindow();
             }
         },
         eventElement: {
@@ -119,7 +105,7 @@
             divAuthReg : document.getElementById('div-auth-reg')
         },
         helpFunc: {
-            checkInputsValue: function (inputs) {
+            checkInputsValue: function (elem) {
                 var valid = true;
                 var correct = function (command, elem, message) {
                     var formGroup = elem.parentNode.parentNode,
@@ -140,6 +126,12 @@
                         formGlyficon.classList.add('glyphicon-ok');
                     }
                 };
+                var inputs = [];
+                if(!elem.length) {
+                    inputs.push(elem);
+                } else {
+                    inputs = elem;
+                }
                 for(var i = 0; i < inputs.length; i++) {
                     if(inputs[i].value.length != 0) {
                         switch(inputs[i].attributes.id) {

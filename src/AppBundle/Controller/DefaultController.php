@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Users;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
 class DefaultController extends Controller
@@ -118,21 +119,29 @@ class DefaultController extends Controller
                  ]
                 );
         } else {
-            $user = $this->getUserByEmail($request);
-            $service_authorization = $this->get('authorization');
-            $status = $service_authorization->check_login($user, $request);
-            switch ($status['message']) {
-                case $service_authorization::STATUS_OK :
-                    $request->getSession()->set('full-name', $user->getFirstName().' '.$user->getSecondName());
-                    $request->getSession()->set('authorization', true);
-                    break;
+            try {
+                $auth_service = $this->get('authorization');
+                $user = $auth_service->getUserByEmail($request->get('email'));
+                $status = $auth_service->check_login($user, $request);
+                switch ($status) {
+                    case $auth_service::STATUS_OK :
+                        $request->getSession()->set('full-name', $user->getFirstName().' '.$user->getSecondName());
+                        $request->getSession()->set('authorization', true);
+                        return new JsonResponse(true, 200);
+                        break;
+                    case $auth_service::STATUS_WRONG :
+                        return new JsonResponse(false, 403);
+                        break;
+                    case $auth_service::STATUS_BLOCKED :
+                        return new JsonResponse(false, 423);
+                        break;
+                    case $auth_service::STATUS_NOT_FOUND :
+                        return new JsonResponse(false, 404);
+                        break;
+                }
+            } catch (HttpException $error) {
+                return new JsonResponse(false, $error->getStatusCode());
             }
-            return new JsonResponse(
-                [
-                    'message' => $status['message'],
-                    'countTry' => $status['count_try']
-                ]
-            );
         }
     }
 
@@ -151,27 +160,23 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/check_email/{}", name="check_email")
+     * @Route("/check_email", name="check_email")
      * @Method({"GET", "POST"})
      * @param Request $request
      * @return Response
      */
     public function checkEmailAction(Request $request) {
+        $auth_service = $this->get('authorization');
         try {
-            if($this->getUserByEmail($request)) {
-                return new JsonResponse(true, 404);
+            if(!($auth_service->getUserByEmail($request->get('email')))) {
+                return new JsonResponse(true, 200);
             } else {
-                return new JsonResponse(false, 200);
+                return new JsonResponse(false, 423);
             }
         } catch(\Exception $error) {
             return new JsonResponse(false, 500);
         }
     }
 
-    private function getUserByEmail(Request $request) {
-        $user = $this->getDoctrine()
-            ->getRepository('AppBundle:Users')
-            ->findOneBy(['email' => $request->get('email')]);
-        return $user;
-    }
+
 }
