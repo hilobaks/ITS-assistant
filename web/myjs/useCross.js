@@ -532,6 +532,9 @@ var forAllPage = {
             }
         },
         addEventOnElements: function (elements, typeEvent, handler) {
+            if(typeof elements !== Array) {
+                elements = [ elements ];
+            }
             for(var i = 0; i < elements.length ; i++ ) {
                 EventUtil.addHandler(elements[i], typeEvent, handler);
             }
