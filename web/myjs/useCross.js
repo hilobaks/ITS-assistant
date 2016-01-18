@@ -446,6 +446,16 @@ var forAllPage = {
                 variable.action = true;
             }
         },
+        showSuccessResponse : function (message) {
+
+            var variable = forAllPage.varS.forModalWindow;
+                variable.insertBody.innerHTML = '';
+                variable.insertTitle.innerHTML = '';
+            variable.idModalWindow = message.idModalWin;
+            variable.insertTitle.appendChild(message.title);
+            variable.insertBody.appendChild(message.body);
+
+        },
         showFailResponse : function (error, messages) {
             var variable = forAllPage.varS.forModalWindow;
             variable.insertTitle.nodeValue = 'Ошибка';

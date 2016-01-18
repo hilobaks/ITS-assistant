@@ -148,6 +148,28 @@ class DefaultController extends Controller
         }
     }
 
+    /**
+     * @Route("/send_again", name="send_again")
+     * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function sendAgainAction(Request $request)
+    {
+        $auth_service = $this->get('authorization');
+        $user = $auth_service->getUserByEmail($request->get('email'));
+        if($user) {
+            $this->mailSend([
+                'login' =>  $user->getEmail(),
+                'password' => $user->getPassword()
+            ]);
+            return new Response('', 200);
+        } else {
+            return new Response('', 404);
+        }
+    }
+
     private function mailSend($info) {
         $message = \Swift_Message::newInstance()
             ->setFrom('bover09@gmail.com')

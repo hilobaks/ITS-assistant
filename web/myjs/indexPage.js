@@ -38,7 +38,7 @@
                         forAllPage.funcS.showModalWindow('#diagram-modal');
                         break;
                 }
-            },
+            }
         },
         eventElement: {
             ulApp : document.querySelector('#open-app-button')

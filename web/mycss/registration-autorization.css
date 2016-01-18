@@ -7,3 +7,15 @@
 label {
     color: #204d74;
 }
+#send-again-modal {
+    top:5%;
+    left:45%;
+    outline: none;
+}
+#send-again-modal .modal-body {
+    color: #204d74;
+}
+#send-again-modal h2{
+    color:#08C;
+    font-family: 'Comfortaa', cursive;
+}
