@@ -10,7 +10,10 @@
             EventUtil.addHandler(eventElement.inputEmailRegistration, 'change', this.checkUseEmail);
             EventUtil.addHandler(eventElement.formEnterProfile, 'submit', this.checkUser);
             forAllPage.funcS.addEventOnElements(eventElement.inputRegistration, 'blur', this.showStatusInput);
-            EventUtil.addHandler(eventElement.divAuthReg, 'click', this.showModalAuthAndReg);
+            EventUtil.addHandler(eventElement.buttonOpenLogin, 'click', this.showModalAuthAndReg);
+            EventUtil.addHandler(eventElement.buttonOpenRegistration, 'click', this.showModalAuthAndReg);
+            EventUtil.addHandler(eventElement.sendAgainButton, 'click', this.showModalAuthAndReg);
+            EventUtil.addHandler(eventElement.sendAgainForm, 'submit', this.sendAgainPassword);
         },
         eventHandlers : {
             checkUseEmail: function (event) {
@@ -90,15 +93,51 @@
             },
             showModalAuthAndReg: function (event) {
                 event = EventUtil.getEvent(event);
-                switch(EventUtil.getTarget(event).id) {
+                switch(EventUtil.getCurrentTarget(event).id) {
                     case "login-button":
                         forAllPage.varS.forModalWindow.idModalWindow = 'login-modal';
                         break;
                     case "registration-button":
                         forAllPage.varS.forModalWindow.idModalWindow = 'reg-modal';
                         break;
+                    case "send-again-password":
+                        forAllPage.varS.forModalWindow.idModalWindow = 'send-again-modal';
+                        $('#login-modal').modal('hide');
+                        break;
                 }
                 forAllPage.funcS.showModalWindow();
+            },
+            sendAgainPassword : function (event) {
+                EventUtil.preventDefault(event);
+                var that = this;
+                forAllPage.funcS.sendAjaxRequest('/send_again', {
+                    email : this.elements['email'].value
+                })
+                    .then(
+                        function (response) {
+                            $('#send-again-modal').modal('hide');
+                            var message = {
+                                idModalWin : 'tempModal',
+                                title : document.createTextNode('Проверьте Вашу почту'),
+                                body : document.createTextNode('Вам на почту было выслано письмо с паролем для входа')
+                            };
+                            forAllPage.funcS.showSuccessResponse(message);
+                        }, function (error) {
+                            forAllPage.funcS.showFailResponse(error, {
+                                404: 'Пользователь с данным email не найден.'
+                            });
+                        }, function () {
+                            that.elements['submit-send-again'].disable = true;
+                            forAllPage.funcS.showProgress(that.elements['submit-send-again'], 'show');
+                        }
+                    )
+                    .always(
+                        function () {
+                            that.elements['submit-send-again'].disable = false;
+                            forAllPage.funcS.showProgress(that.elements['submit-send-again'], 'hide');
+                            forAllPage.funcS.showModalWindow();
+                        }
+                    );
             }
         },
         eventElement: {
@@ -107,7 +146,9 @@
             inputRegistration: document.querySelectorAll('#registration-form input:not(#input-email)'),
             buttonOpenLogin : document.getElementById('login-button'),
             buttonOpenRegistration : document.getElementById('registration-button'),
-            divAuthReg : document.getElementById('div-auth-reg')
+            divAuthReg : document.getElementById('div-auth-reg'),
+            sendAgainButton : document.getElementById('send-again-password'),
+            sendAgainForm : document.forms['send-again-form']
         },
         helpFunc: {
             checkInputsValue: function (elem) {
@@ -173,6 +214,10 @@
                     formGlyficon.classList.remove('glyphicon-remove');
                     formGlyficon.classList.add('glyphicon-ok');
                 }
+            },
+            sendAgainPassword : function (event) {
+                var email = this.elements['email'].value;
+                forAllPage.funcS.sendAjaxRequest('');
             }
         },
         variable: {

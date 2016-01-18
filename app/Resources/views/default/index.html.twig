@@ -56,6 +56,7 @@
         </footer>
         {% include(':default:modal-login.html.twig') %}
         {% include(':default:modal-registration.html.twig') %}
+        {% include(':default:modal-send-again-password.html.twig') %}
     {% else %}
         {% stylesheets 'mycss/profile.css' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
@@ -111,6 +112,16 @@
                 </div>
             </div>
         </div>
+        {% include(':default:ip-calc.html.twig') %}
+        {% javascripts
+            'myjs/AnimatedBorderMenu/classie.js'
+            'myjs/AnimatedBorderMenu/borderMenu.js'
+            'myjs/jquery.easing.1.3.js'
+            'myjs/indexPage.js'
+            'myjs/ip-calc.js'
+        %}
+            <script defer src="{{ asset_url }}"></script>
+        {% endjavascripts %}
     {% endif %}
     {% include(':default:temp-modal-window.html.twig') %}
 {% endblock %}
@@ -119,8 +130,6 @@
         'myjs/detect-browser.js'
         'myjs/cross-event.js'
         'myjs/useCross.js'
-        'myjs/AnimatedBorderMenu/classie.js'
-        'myjs/AnimatedBorderMenu/borderMenu.js'
         'myjs/registration-autorization.js'
     %}
         <script src="{{ asset_url }}"></script>
