@@ -20,22 +20,25 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render(
-            'default/index.html.twig',
-            [
-                'auth' => false
-            ]
-        );
+        if(!($request->getSession()->get('auth'))) {
+            return $this->render(
+                'default/index.html.twig',
+                [
+                    'auth' => true
+                ]
+            );
+        } else {
+            return  $this->redirectToRoute('sign_in', ['redirect_to_sign_in' =>  $request]);
+        }
     }
 
     /**
      * @Route("/registration", name="registration")
      * @Method({"GET", "POST"})
      *
-     * @param Request $request
      * @return Response
      */
-    public function registrationAction(Request $request)
+    public function registrationAction()
     {
         // replace this example code with whatever you need
         return $this->render('default/registration.html.twig', array(
@@ -112,12 +115,16 @@ class DefaultController extends Controller
      */
     public function signInAction(Request $request)
     {
-        $status_authorization = $request->getSession()->get('auth');
-        if($status_authorization) {
+        $now_authorization = $request->getSession()->get('auth');
+        $was_authorization = false;
+        if(!$now_authorization) {
+            $was_authorization = $request['redirect_to_sign_in']->getSession()->get('auth');
+        }
+        if($now_authorization || $was_authorization) {
             return $this->render(
                  ':default:index.html.twig' ,
                  [
-                     'auth' => $status_authorization,
+                     'auth' => now_authorization,
                      'full_name' => $request->getSession()->get('full-name')
                  ]
                 );
@@ -129,6 +136,7 @@ class DefaultController extends Controller
                 switch ($status) {
                     case $auth_service::STATUS_OK :
                         $request->getSession()->set('full-name', $user->getFirstName().' '.$user->getSecondName());
+                        $request->getSession()->set('id_customer', $user->getId());
                         $request->getSession()->set('auth', true);
                         return new JsonResponse(true, 200);
                         break;
