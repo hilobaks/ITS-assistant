@@ -25,6 +25,8 @@
                     var maskTenToSecond = app.helpFunc.getMaskTenToSecond(inputsMask);
                     var outputNumberAddress = document.getElementsByClassName('output-ip-address'),
                         broadcast = document.getElementsByClassName('broadcast'),
+                        wildcard = document.getElementsByClassName('wildcard'),
+                        firstHost = document.getElementsByClassName('first-host'),
                         allNumberAddress = {
                             firstPartNumberAddress : outputNumberAddress[0],
                             secondPartNumberAddress : outputNumberAddress[1],
@@ -36,11 +38,26 @@
                             secondPartBroadcast : broadcast[1],
                             thirdPartBroadcast : broadcast[2],
                             fourthPartBroadcast : broadcast[3]
+                        },
+                        allWildcard = {
+                            firstPartBroadcast : wildcard[0],
+                            secondPartBroadcast : wildcard[1],
+                            thirdPartBroadcast : wildcard[2],
+                            fourthPartBroadcast : wildcard[3]
+                        },
+                        allFirstHost = {
+                            firstPartFirstHost : firstHost[0],
+                            secondPartFirstHost : firstHost[1],
+                            thirdPartFirstHost : firstHost[2],
+                            fourthPartFirstHost : firstHost[3]
                         };
                     var numberNetwork = app.helpFunc.getNumberNetwork(ipTenToSecond, maskTenToSecond),
-                        responseNumberNetwork = app.helpFunc.secondToTen(numberNetwork.match(/\d{8}/g)),
                         numberBroadcast = app.helpFunc.getBroadcast(ipTenToSecond, maskTenToSecond),
-                        responseBroadcast = app.helpFunc.secondToTen(numberBroadcast.match(/\d{8}/g));
+                        numberWildcard = app.helpFunc.getWildcard(maskTenToSecond),
+                        responseNumberNetwork = app.helpFunc.secondToTen(numberNetwork.match(/\d{8}/g)),
+                        numberFirstHost = app.helpFunc.getFirstHost(responseNumberNetwork),
+                        responseBroadcast = app.helpFunc.secondToTen(numberBroadcast.match(/\d{8}/g)),
+                        responseWildcard = app.helpFunc.secondToTen(numberWildcard.match(/\d{8}/g));
                     var addInfo = function (array, response) {
                         for(var field in array) {
                             array[field].value = response[0];
@@ -49,8 +66,11 @@
                     };
                     addInfo(allNumberAddress, responseNumberNetwork);
                     addInfo(allBroadcast, responseBroadcast);
+                    addInfo(allWildcard, responseWildcard);
+                    addInfo(allFirstHost, numberFirstHost);
                     forAllPage.funcS.animateOpacity(0, 1, document.getElementById('output-ip-addresses'));
                     forAllPage.funcS.animateOpacity(0, 1, document.getElementById('broadcast'));
+                    forAllPage.funcS.animateOpacity(0, 1, document.getElementById('wildcard'));
                 } else {
 
                 }
@@ -86,6 +106,45 @@
             inputMaskSubNetwork : document.getElementById('mask-sub-network')
         },
         helpFunc: {
+            validateInput: function (inputs) {
+                if(inputs instanceof Node) {
+                    inputs = [ inputs ];
+                }
+                var arrayInput = inputs.concat();
+                var validInput = arrayInput.every(function (item, index, array) {
+                    if(item.validity.customError) {
+                        item.setCustomValidity('');
+                    }
+                    if(!item.validity.valid || (0 > parseInt(item.value) || parseInt(item.value) > 255)) {
+                        if(item.validity.patternMismatch) {
+                            item.validationMessage = 'Некоректный ввод. Введите значение в пределах от 0 до 255.';
+                            item.setCustomValidity('Некоректный ввод. Введите значение в пределах от 0 до 255.');
+                        } else if(parseInt(item.value) > 255) {
+                            item.validationMessage = 'Введенное значение больше максимального. Введите значение в пределах от 0 до 255.';
+                            item.setCustomValidity('Введенное значение больше максимального. Введите значение в пределах от 0 до 255.');
+                        } else if(0 > parseInt(item.value)) {
+                            item.validationMessage = 'Введенное значение меньше минимального. Введите значение в пределах от 0 до 255.';
+                            item.setCustomValidity('Введенное значение меньше минимального. Введите значение в пределах от 0 до 255.');
+                        } else if(item.validity.valueMissing) {
+                            item.validationMessage = 'Введите значение в пределах от 0 до 255.';
+                            item.setCustomValidity('Введите значение в пределах от 0 до 255.');
+                        }
+                        setTimeout(function () {
+                            item.checkValidity();
+                            app.helpVar.validInputsCalc[item.name] = false;
+                            forAllPage.funcS.trigger.mouse(document.getElementById('calc-IP'), 'click');
+                            setTimeout(function () {
+                                item.focus();
+                            }, 100);
+                        }, 100);
+                        return false;
+                    } else {
+                        app.helpFunc.focusInput(index + 1);
+                        return true;
+                    }
+                });
+                return validInput;
+            },
             focusInput : function (item) {
                 var form = document.forms['form-calc-IP'];
                 form.elements[item].focus();
@@ -133,45 +192,6 @@
                 }
                 return broadcast.join('');
             },
-            validateInput: function (inputs) {
-                if(inputs instanceof Node) {
-                    inputs = [ inputs ];
-                }
-                var arrayInput = inputs.concat();
-                var validInput = arrayInput.every(function (item, index, array) {
-                    if(item.validity.customError) {
-                        item.setCustomValidity('');
-                    }
-                    if(!item.validity.valid || (0 > parseInt(item.value) || parseInt(item.value) > 255)) {
-                        if(item.validity.patternMismatch) {
-                            item.validationMessage = 'Некоректный ввод. Введите значение в пределах от 0 до 255.';
-                            item.setCustomValidity('Некоректный ввод. Введите значение в пределах от 0 до 255.');
-                        } else if(parseInt(item.value) > 255) {
-                            item.validationMessage = 'Введенное значение больше максимального. Введите значение в пределах от 0 до 255.';
-                            item.setCustomValidity('Введенное значение больше максимального. Введите значение в пределах от 0 до 255.');
-                        } else if(0 > parseInt(item.value)) {
-                            item.validationMessage = 'Введенное значение меньше минимального. Введите значение в пределах от 0 до 255.';
-                            item.setCustomValidity('Введенное значение меньше минимального. Введите значение в пределах от 0 до 255.');
-                        } else if(item.validity.valueMissing) {
-                            item.validationMessage = 'Введите значение в пределах от 0 до 255.';
-                            item.setCustomValidity('Введите значение в пределах от 0 до 255.');
-                        }
-                        setTimeout(function () {
-                            item.checkValidity();
-                            app.helpVar.validInputsCalc[item.name] = false;
-                            forAllPage.funcS.trigger.mouse(document.getElementById('calc-IP'), 'click');
-                            setTimeout(function () {
-                                item.focus();
-                            }, 100);
-                        }, 100);
-                        return false;
-                    } else {
-                        app.helpFunc.focusInput(index + 1);
-                        return true;
-                    }
-                });
-                return validInput;
-            },
             getMaskSubNetwork : function (form) {
                 var inputsMask = document.getElementsByClassName('input-mask-subnetwork');
                 for(var index = 0; index < inputsMask.length - 1; index++) {
@@ -204,6 +224,22 @@
                     }
                 }
                 return maskTenToSecond;
+            },
+            getWildcard : function (maskSubNetwork) {
+                var wildcard = '';
+                Array.prototype.slice.call(maskSubNetwork).forEach(function (item, index, array) {
+                    if(item == 1) {
+                        wildcard += '0';
+                    } else if(item == 0) {
+                        wildcard += '1';
+                    }
+                });
+                return wildcard;
+            },
+            getFirstHost : function (numberNetwork) {
+                var firstHost = numberNetwork.slice(0,3);
+                firstHost.push(1);
+                return firstHost
             }
         },
         helpVar: {
