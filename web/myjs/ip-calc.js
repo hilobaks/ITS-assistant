@@ -95,7 +95,11 @@
                 for(var field in valueInTen) {
                     var tempNumber = Number(valueInTen[field]).toString(2);
                     if(tempNumber.length !== 8) {
-                        for(var i = 0; tempNumber.length != 8; i++ ) tempNumber +=  '0';
+                        var countZero = '';
+                        for(var i = 0; (tempNumber.length + countZero.length) != 8; i++ ) {
+                            countZero +=  '0';
+                        }
+                        tempNumber = countZero + tempNumber;
                     }
                     ipAddressInTwo.push(tempNumber);
                 }
@@ -129,7 +133,7 @@
                 }
                 return broadcast.join('');
             },
-            validateInput: function (inputs, event) {
+            validateInput: function (inputs) {
                 if(inputs instanceof Node) {
                     inputs = [ inputs ];
                 }
@@ -140,17 +144,17 @@
                     }
                     if(!item.validity.valid || (0 > parseInt(item.value) || parseInt(item.value) > 255)) {
                         if(item.validity.patternMismatch) {
-                            item.validationMessage = 'Некоректный ввод.';
-                            item.setCustomValidity('Некоректный ввод.');
+                            item.validationMessage = 'Некоректный ввод. Введите значение в пределах от 0 до 255.';
+                            item.setCustomValidity('Некоректный ввод. Введите значение в пределах от 0 до 255.');
                         } else if(parseInt(item.value) > 255) {
-                            item.validationMessage = 'Введенное значение больше максимального.';
-                            item.setCustomValidity('Введенное значение больше максимального.');
+                            item.validationMessage = 'Введенное значение больше максимального. Введите значение в пределах от 0 до 255.';
+                            item.setCustomValidity('Введенное значение больше максимального. Введите значение в пределах от 0 до 255.');
                         } else if(0 > parseInt(item.value)) {
-                            item.validationMessage = 'Введенное значение меньше минимального.';
-                            item.setCustomValidity('Введенное значение меньше минимального.');
+                            item.validationMessage = 'Введенное значение меньше минимального. Введите значение в пределах от 0 до 255.';
+                            item.setCustomValidity('Введенное значение меньше минимального. Введите значение в пределах от 0 до 255.');
                         } else if(item.validity.valueMissing) {
-                            item.validationMessage = 'Введите значение.';
-                            item.setCustomValidity('Введите значение.');
+                            item.validationMessage = 'Введите значение в пределах от 0 до 255.';
+                            item.setCustomValidity('Введите значение в пределах от 0 до 255.');
                         }
                         setTimeout(function () {
                             item.checkValidity();
@@ -170,10 +174,12 @@
             },
             getMaskSubNetwork : function (form) {
                 var inputsMask = document.getElementsByClassName('input-mask-subnetwork');
-                for(var index = 0; index < inputsMask.length; index++) {
+                for(var index = 0; index < inputsMask.length - 1; index++) {
                     if(!(inputsMask[index].value.length)) {
                         inputsMask = form.elements['number-one-in-mask'];
                         break;
+                    } else {
+                        inputsMask = Array.prototype.slice.call( inputsMask).slice(0,4);
                     }
                 }
                 return inputsMask;
