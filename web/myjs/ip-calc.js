@@ -27,6 +27,7 @@
                         broadcast = document.getElementsByClassName('broadcast'),
                         wildcard = document.getElementsByClassName('wildcard'),
                         firstHost = document.getElementsByClassName('first-host'),
+                        lastHost = document.getElementsByClassName('last-host'),
                         allNumberAddress = {
                             firstPartNumberAddress : outputNumberAddress[0],
                             secondPartNumberAddress : outputNumberAddress[1],
@@ -50,6 +51,12 @@
                             secondPartFirstHost : firstHost[1],
                             thirdPartFirstHost : firstHost[2],
                             fourthPartFirstHost : firstHost[3]
+                        },
+                        allLastHost = {
+                            firstPartLastHost : lastHost[0],
+                            secondPartLastHost : lastHost[1],
+                            thirdPartLastHost : lastHost[2],
+                            fourthPartLastHost : lastHost[3]
                         };
                     var numberNetwork = app.helpFunc.getNumberNetwork(ipTenToSecond, maskTenToSecond),
                         numberBroadcast = app.helpFunc.getBroadcast(ipTenToSecond, maskTenToSecond),
@@ -71,6 +78,7 @@
                     forAllPage.funcS.animateOpacity(0, 1, document.getElementById('output-ip-addresses'));
                     forAllPage.funcS.animateOpacity(0, 1, document.getElementById('broadcast'));
                     forAllPage.funcS.animateOpacity(0, 1, document.getElementById('wildcard'));
+                    forAllPage.funcS.animateOpacity(0, 1, document.getElementById('first-host'));
                 } else {
 
                 }
@@ -239,7 +247,12 @@
             getFirstHost : function (numberNetwork) {
                 var firstHost = numberNetwork.slice(0,3);
                 firstHost.push(1);
-                return firstHost
+                return firstHost;
+            },
+            getLastHost : function () {
+                var lastHost = numberNetwork.slice(0,3);
+                lastHost.push(254);
+                return lastHost;
             }
         },
         helpVar: {
