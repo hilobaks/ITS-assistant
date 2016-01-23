@@ -63,6 +63,7 @@
                         numberWildcard = app.helpFunc.getWildcard(maskTenToSecond),
                         responseNumberNetwork = app.helpFunc.secondToTen(numberNetwork.match(/\d{8}/g)),
                         numberFirstHost = app.helpFunc.getFirstHost(responseNumberNetwork),
+                        numberLastHost = app.helpFunc.getLastHost(responseNumberNetwork),
                         responseBroadcast = app.helpFunc.secondToTen(numberBroadcast.match(/\d{8}/g)),
                         responseWildcard = app.helpFunc.secondToTen(numberWildcard.match(/\d{8}/g));
                     var addInfo = function (array, response) {
@@ -75,10 +76,12 @@
                     addInfo(allBroadcast, responseBroadcast);
                     addInfo(allWildcard, responseWildcard);
                     addInfo(allFirstHost, numberFirstHost);
+                    addInfo(allLastHost, numberLastHost);
                     forAllPage.funcS.animateOpacity(0, 1, document.getElementById('output-ip-addresses'));
                     forAllPage.funcS.animateOpacity(0, 1, document.getElementById('broadcast'));
                     forAllPage.funcS.animateOpacity(0, 1, document.getElementById('wildcard'));
                     forAllPage.funcS.animateOpacity(0, 1, document.getElementById('first-host'));
+                    forAllPage.funcS.animateOpacity(0, 1, document.getElementById('last-host'));
                 } else {
 
                 }
@@ -123,19 +126,19 @@
                     if(item.validity.customError) {
                         item.setCustomValidity('');
                     }
-                    if(!item.validity.valid || (0 > parseInt(item.value) || parseInt(item.value) > 255)) {
+                    if(!item.validity.valid || (0 > parseInt(item.value) || parseInt(item.value) > 254)) {
                         if(item.validity.patternMismatch) {
-                            item.validationMessage = 'Некоректный ввод. Введите значение в пределах от 0 до 255.';
-                            item.setCustomValidity('Некоректный ввод. Введите значение в пределах от 0 до 255.');
-                        } else if(parseInt(item.value) > 255) {
-                            item.validationMessage = 'Введенное значение больше максимального. Введите значение в пределах от 0 до 255.';
-                            item.setCustomValidity('Введенное значение больше максимального. Введите значение в пределах от 0 до 255.');
+                            item.validationMessage = 'Некоректный ввод. Введите значение в пределах от 0 до 254.';
+                            item.setCustomValidity('Некоректный ввод. Введите значение в пределах от 0 до 254.');
+                        } else if(parseInt(item.value) > 254) {
+                            item.validationMessage = 'Введенное значение больше максимального. Введите значение в пределах от 0 до 254.';
+                            item.setCustomValidity('Введенное значение больше максимального. Введите значение в пределах от 0 до 254.');
                         } else if(0 > parseInt(item.value)) {
-                            item.validationMessage = 'Введенное значение меньше минимального. Введите значение в пределах от 0 до 255.';
-                            item.setCustomValidity('Введенное значение меньше минимального. Введите значение в пределах от 0 до 255.');
+                            item.validationMessage = 'Введенное значение меньше минимального. Введите значение в пределах от 0 до 254.';
+                            item.setCustomValidity('Введенное значение меньше минимального. Введите значение в пределах от 0 до 254.');
                         } else if(item.validity.valueMissing) {
-                            item.validationMessage = 'Введите значение в пределах от 0 до 255.';
-                            item.setCustomValidity('Введите значение в пределах от 0 до 255.');
+                            item.validationMessage = 'Введите значение в пределах от 0 до 254.';
+                            item.setCustomValidity('Введите значение в пределах от 0 до 254.');
                         }
                         setTimeout(function () {
                             item.checkValidity();
@@ -249,7 +252,7 @@
                 firstHost.push(1);
                 return firstHost;
             },
-            getLastHost : function () {
+            getLastHost : function (numberNetwork) {
                 var lastHost = numberNetwork.slice(0,3);
                 lastHost.push(254);
                 return lastHost;
