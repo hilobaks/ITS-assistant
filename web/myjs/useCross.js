@@ -542,14 +542,8 @@ var forAllPage = {
             }
         },
         addEventOnElements: function (elements, typeEvent, handler) {
-            if(typeof elements !== Array) {
-                elements = [ elements ];
-            }
             for(var i = 0; i < elements.length ; i++ ) {
                 EventUtil.addHandler(elements[i], typeEvent, handler);
-            }
-            for(var element in elements) {
-                EventUtil.addHandler(element, typeEvent, handler);
             }
         },
         crossGetStyle: function (elem) {
@@ -597,7 +591,14 @@ var forAllPage = {
                 addAndDeleteClass( inputsGroup, 'input-group-xs', ['input-group-sm', 'input-group-md', 'input-group-lg']);
                 addAndDeleteClass( buttons, 'btn-xs', ['btn-sm', 'btn-lg', 'btn-md']);
             }
-        }
+        },
+        trigger : {
+            mouse : function (element, typeEvent) {
+                var event = document.createEvent('MouseEvents');
+                event.initMouseEvent(typeEvent, true, true, document.defaultView, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                element.dispatchEvent(event);
+            }
+        },
     },
     varS : {
         forModalWindow: {

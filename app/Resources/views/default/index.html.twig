@@ -12,11 +12,25 @@
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
+{% block javascripts %}
+    {% javascripts
+    'myjs/detect-browser.js'
+    'myjs/cross-event.js'
+    'myjs/useCross.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
 {% block body %}
     {% if auth != true%}
         {% stylesheets 'mycss/indexPage.css' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
+        {% javascripts
+            'myjs/registration-autorization.js'
+        %}
+            <script defer src="{{ asset_url }}"></script>
+        {% endjavascripts %}
         <div class="container-fluid">
             <div class="row text-center">
                 <h1 id="name-app">ITS-assistant</h1>
@@ -125,14 +139,5 @@
     {% endif %}
     {% include(':default:temp-modal-window.html.twig') %}
 {% endblock %}
-{% block javascripts %}
-    {% javascripts
-        'myjs/detect-browser.js'
-        'myjs/cross-event.js'
-        'myjs/useCross.js'
-        'myjs/registration-autorization.js'
-    %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}
+
 

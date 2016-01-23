@@ -20,10 +20,12 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $status_auth = $request->getSession()->get('auth');
         return $this->render(
-            'default/index.html.twig',
+            ':default:index.html.twig' ,
             [
-                'auth' => false
+                'auth' => $status_auth,
+                'full_name' => $request->getSession()->get('full-name')
             ]
         );
     }
@@ -112,15 +114,9 @@ class DefaultController extends Controller
      */
     public function signInAction(Request $request)
     {
-        $status_authorization = $request->getSession()->get('auth');
-        if($status_authorization) {
-            return $this->render(
-                 ':default:index.html.twig' ,
-                 [
-                     'auth' => $status_authorization,
-                     'full_name' => $request->getSession()->get('full-name')
-                 ]
-                );
+        $status_auth = $request->getSession()->get('auth');
+        if($status_auth) {
+            return $this->redirectToRoute('homepage');
         } else {
             try {
                 $auth_service = $this->get('authorization');
