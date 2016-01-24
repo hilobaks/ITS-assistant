@@ -3,7 +3,6 @@
         initialize : function () {
             this.setUpListeners.call(this.eventHandlers, this.eventElements);
         },
-
         setUpListeners: function (eventElements) {
             EventUtil.addHandler(eventElements.inputMaskSubNetwork, 'click', this.selectTypeMask);
             EventUtil.addHandler(eventElements.formCalcIP, 'submit', this.ipCalc);

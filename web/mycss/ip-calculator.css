@@ -6,19 +6,19 @@
     background-size: cover;
     height: 100%;
 }
-#title-calc-modal, #title-card-carno-modal {
+#title-calc-modal, #title-card-carno-modal, #title-master-report-modal {
     color: white;
     font-family: 'Lobster', cursive;
 }
-#ip-calc-modal span, #card-carno-modal span {
+#ip-calc-modal span, #card-carno-modal span, #master-report-modal span {
     color: #000;
     font-size: 15px;
     font-family: 'Lobster', cursive;
 }
-#ip-calc-modal .modal-header, #card-carno-modal .modal-header {
+#ip-calc-modal .modal-header, #card-carno-modal .modal-header, #master-report-modal .modal-header {
     background-color: rgba(0,0,0,0.4);
 }
-#ip-calc-modal .modal-body label, #card-carno-modal .modal-body label {
+#ip-calc-modal .modal-body label, #card-carno-modal .modal-body label, #master-report-modal .modal-body label {
     color:rgba(0,0,0,1);
     font-family: 'Lobster', cursive;
 }

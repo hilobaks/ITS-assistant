@@ -6,11 +6,36 @@
                 <h2 class="modal-title" id="title-master-report-modal">Мастер-отчетов</h2>
             </div>
             <div class="modal-body">
-
+                <form role="form" id="form-master-report">
+                    <div class="form-group">
+                        <label for="all-name">Ф.И.О</label>
+                        <input type="text" class="form-control" id="all-name" placeholder="Введите Вашу Ф.И.О">
+                    </div>
+                    <div class="form-group">
+                        <label for="all-name">Группа</label>
+                        <input type="text" class="form-control" id="all-name" placeholder="Введите Вашу группу">
+                    </div>
+                    <div class="form-group">
+                        <label for="all-name">Ф.И.О преподавателя</label>
+                        <input type="text" class="form-control" id="all-name" placeholder="Введите Ф.И.О преподавателя">
+                    </div>
+                    <div class="form-group">
+                        <label for="all-name">Название предмета</label>
+                        <input type="text" class="form-control" id="all-name" placeholder="Введите название предмета">
+                    </div>
+                    <div class="form-group">
+                        <label for="all-name">Тип и номер сдаваемой работы</label>
+                        <input type="text" class="form-control" id="all-name" placeholder="Введите тип и номер сдаваемой работы ">
+                    </div>
+                    <div class="form-group">
+                        <label for="all-name">Название сдаваемой работы</label>
+                        <input type="text" class="form-control" id="all-name" placeholder="Введите название сдаваемой работы ">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary">Посчитать</button>
+                <button type="button" class="btn btn-primary" type="submit" form="form-master-report" id="download-report">Скачать</button>
             </div>
         </div>
     </div>
