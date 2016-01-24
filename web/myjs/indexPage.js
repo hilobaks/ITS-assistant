@@ -8,6 +8,7 @@
         },
         setUpListeners: function (eventElement) {
             EventUtil.addHandler(eventElement.ulApp, 'click', this.checkShowModal);
+            EventUtil.addHandler(eventElement.logoutButton, 'click', this.logout);
         },
         eventHandlers : {
             checkShowModal: function (event) {
@@ -38,10 +39,33 @@
                         forAllPage.funcS.showModalWindow('#diagram-modal');
                         break;
                 }
+            },
+            logout : function (event) {
+                EventUtil.preventDefault(event);
+                forAllPage.funcS.sendAjaxRequest('/logout', {})
+                    .then(
+                    function (response) {
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1000);
+                    },
+                    function (error) {
+                        forAllPage.funcS.showFailResponse(error);
+                        forAllPage.funcS.showModalWindow();
+                    },
+                    function () {
+
+                    }
+                )
+                    .always(
+                    function () {
+
+                    });
             }
         },
         eventElement: {
-            ulApp : document.querySelector('#open-app-button')
+            ulApp : document.querySelector('#open-app-button'),
+            logoutButton : document.getElementById('logout')
         },
         helpFunc: {
 

@@ -198,5 +198,14 @@ class DefaultController extends Controller
         }
     }
 
-
+    /**
+     * @Route("/logout", name="logout")
+     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function logoutAction(Request $request) {
+        $request->getSession()->remove('auth');
+        return new Response('', 200);
+    }
 }
