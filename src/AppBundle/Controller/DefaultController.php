@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Users;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
 
 
 class DefaultController extends Controller
@@ -207,5 +210,26 @@ class DefaultController extends Controller
     public function logoutAction(Request $request) {
         $request->getSession()->remove('auth');
         return new Response('', 200);
+    }
+
+    /**
+     * @Route("/create_report", name="create_report")
+     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function createReportAction(Request $request) {
+        $filesystem = new Filesystem();
+        $filesystem->touch('report.doc');
+        $content = $this->render(':default:report.html.twig', []);
+        $filesystem->dumpFile('report.doc', $content);
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/plain');
+        $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            'filename.txt'
+        );
+
+        $response->headers->set('Content-Disposition', $d);
     }
 }
