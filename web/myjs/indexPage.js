@@ -23,20 +23,16 @@
                 var target = EventUtil.getTarget(event);
                 switch(target.id) {
                     case "open-ip-calc":
-                        forAllPage.varS.forModalWindow.idModalWindow = 'ip-calc-modal';
-                        forAllPage.funcS.showModalWindow();
+                        $('#ip-calc-modal').modal('show');
                         break;
                     case "open-master-report":
-                        forAllPage.varS.forModalWindow.idModalWindow = 'master-report-modal';
-                        forAllPage.funcS.showModalWindow('#master-report-modal');
+                        $('#master-report-modal').modal('show');
                         break;
                     case "open-card-carno":
-                        forAllPage.varS.forModalWindow.idModalWindow = '';
-                        forAllPage.funcS.showModalWindow('#card-carno-modal');
+                        $('#card-carno-modal').modal('show');
                         break;
                     case "open-diagram":
-                        forAllPage.varS.forModalWindow.idModalWindow = '';
-                        forAllPage.funcS.showModalWindow('#diagram-modal');
+                        $('#diagram-modal').modal('show');
                         break;
                 }
             },

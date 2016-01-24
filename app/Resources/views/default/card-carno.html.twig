@@ -6,11 +6,16 @@
                 <h2 class="modal-title" id="title-card-carno-modal">Карты Карно</h2>
             </div>
             <div class="modal-body">
-                ...
+                <form role="form">
+                    <div class="form-group">
+                        <label for="input-boolean-value">Логическое значение частей функции</label>
+                        <input type="number" class="form-control" id="input-boolean-value" placeholder="10110001">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-success">Посчитать</button>
+                <button type="button" class="btn btn-success" form="form-card-carno" id="calc-card-carno">Посчитать</button>
             </div>
         </div>
     </div>

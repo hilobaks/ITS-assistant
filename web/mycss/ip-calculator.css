@@ -6,23 +6,23 @@
     background-size: cover;
     height: 100%;
 }
-#title-calc-modal {
+#title-calc-modal, #title-card-carno-modal {
     color: white;
     font-family: 'Lobster', cursive;
 }
-#ip-calc-modal span {
+#ip-calc-modal span, #card-carno-modal span {
     color: #000;
     font-size: 15px;
     font-family: 'Lobster', cursive;
 }
-#ip-calc-modal .modal-header{
+#ip-calc-modal .modal-header, #card-carno-modal .modal-header {
     background-color: rgba(0,0,0,0.4);
 }
-#ip-calc-modal .modal-body label {
+#ip-calc-modal .modal-body label, #card-carno-modal .modal-body label {
     color:rgba(0,0,0,1);
     font-family: 'Lobster', cursive;
 }
-#ip-calc-modal .modal-body form .col-lg-3 {
+#ip-calc-modal .modal-body form .col-lg-3   {
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
