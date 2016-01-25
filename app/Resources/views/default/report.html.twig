@@ -1,12 +1,40 @@
-<div class="container">
-    <div class="row">
-        <div class="header text-center">
-            <h3>
-                Министерство образования и науки Украины
-                Национальный технический университет Украины
-                «Киевский политехнический институт»
-                Институт телекоммуникационных систем
-            </h3>
-        </div>
+
+<html style="width: 100%; height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>Тег META, атрибут charset</title>
+</head>
+<body>
+    <div style="margin-left: 45%">
+        <img style=" width: 20%; height: 40%;" src="{{ asset('myimg/title.jpg') }}" alt="">
     </div>
-</div>
+    <div style="text-align: center; margin-left:20%;margin-top:10%;width: 60%;">
+        <span style="font-size: 25px;">
+            Министерство образования и науки Украины
+            Национальный технический университет Украины
+            «Киевский политехнический институт»
+            Институт телекоммуникационных систем
+        </span>
+    </div>
+    <div style="margin-top: 20%;margin-left: 40%">
+        <h2>{{ typeAndNumber }}</h2>
+    </div>
+    <div style="margin-left: 15%; margin-right: 15%;;text-align: center;">
+        <span style="font-size: 22px;">По дисциплине "{{ nameSubject }}"
+            на тему "{{ nameReport }}"
+        </span>
+    </div>
+    <div style="margin-left:63%; margin-top: 30%;">
+        <span style="font-size: 22px; font-weight: 400"> Выполнил/Выполнила :<br>
+            cтудент/студентка группы {{ group }} <br>
+            {{ nameUser }} <br>
+            Вариант №{{ variant }} <br>
+            Проверил : <br>
+            {{ nameTeacher }}
+        </span>
+    </div>
+    <div style="margin-top:40%;margin-left: 45%;">
+        <h3>Киев-2015</h3>
+    </div>
+</body>
+</html>

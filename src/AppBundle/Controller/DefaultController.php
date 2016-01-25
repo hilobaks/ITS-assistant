@@ -19,6 +19,22 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class DefaultController extends Controller
 {
     /**
+     * @Route("/temp", name="temp")
+     */
+    public function tempAction(Request $request)
+    {
+        return $this->render(':default:report.html.twig' , [
+            'typeAndNumber' => 'Лабораторная работа №5',
+            'group' => 'ТИ-22',
+            'nameUser' => 'Тимченко Ирина Олеговна',
+            'nameTeacher' => 'Сундучков Константин Станиславович',
+            'variant' => '20',
+            'nameSubject' => 'Телекоммуникационные беспроводные системы - 2',
+            'nameReport' => 'Исследование требуемой длительности временного защитного интервала в OFDM-символе при многолучевости для борьбы с межсимвольными искажениями'
+        ]);
+    }
+
+    /**
      * @Route("/", name="homepage")
      */
     public function indexAction(Request $request)
@@ -214,22 +230,37 @@ class DefaultController extends Controller
 
     /**
      * @Route("/create_report", name="create_report")
-     * @Method({"GET", "POST"})
+     * @Method({"GET"})
      * @param Request $request
      * @return Response
      */
     public function createReportAction(Request $request) {
-        $filesystem = new Filesystem();
-        $filesystem->touch('report.doc');
-        $content = $this->render(':default:report.html.twig', []);
-        $filesystem->dumpFile('report.doc', $content);
-        $response = new Response();
-        $response->headers->set('Content-Type', 'text/plain');
-        $response->setContentDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'filename.txt'
+
+        $html = $this->renderView(':default:report.html.twig', array(
+            'typeAndNumber' => $request->get('type-and-number'),
+            'nameSubject' => $request->get('name-subject'),
+            'nameReport' => $request->get('name-report'),
+            'group' => $request->get('group'),
+            'nameUser' => $request->get('full-name'),
+            'variant' => $request->get('variant'),
+            'nameTeacher' => $request->get('teacher')
+        ));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="file.pdf"'
+            )
         );
 
-        $response->headers->set('Content-Disposition', $d);
+//        $filesystem = new Filesystem();
+//        $filesystem->touch('report.doc');
+//        $content = $this->render(':default:report.html.twig', []);
+//        $filesystem->dumpFile('report.doc', $content);
+//        $file = 'report.doc';
+//        $response = new BinaryFileResponse($file);
+//        return $response;
     }
 }

@@ -20,7 +20,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "twbs/bootstrap": "^3.3",
         "doctrine/doctrine-migrations-bundle": "^1.0",
-        "hackzilla/password-generator-bundle": "~1.0"
+        "hackzilla/password-generator-bundle": "~1.0",
+        "knplabs/knp-snappy-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

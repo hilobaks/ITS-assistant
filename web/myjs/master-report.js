@@ -15,10 +15,26 @@
 
                 });
                 this.constructor.prototype.sendInfo = function (info) {
-                    var sendObjInfo = [];
-                    sendObjInfo.push(info.map(function (item, index, array) {
+                    var sendObjInfo = {};
+                    Array.prototype.slice.call(info).forEach(function (item, index, array) {
+                        if(info.type != 'button') {
+                            sendObjInfo[item.name] = item.value;
+                        }
+                    });
+                    forAllPage.funcS.sendAjaxRequest('/create_report', sendObjInfo)
+                        .then(function (response) {
+                           alert(response);
+                        },
+                        function (error) {
+                            alert(error.status);
+                        },
+                        function () {
 
-                    }));
+                        }
+                    )
+                        .always(function () {
+
+                        });
                 }
             }
             this.model.masterReport = new MasterReport();
@@ -28,12 +44,13 @@
                 Object.defineProperties(this, {
 
                 });
-                this.constructor.prototype.init = function () {
-                    EventUtil.addHandler(this.form, 'submit', function () {
-
+                this.constructor.prototype.init = function (event) {
+                    EventUtil.addHandler(this.form, 'submit', function (event) {
+                        EventUtil.preventDefault(event);
+                        app.model.masterReport.sendInfo(this.elements);
                     });
                 };
-                init.call(app.view.masterReport);
+                //this.init.call(app.view.masterReport);
             }
             this.controller.masterReport = new MasterReport();
         },
