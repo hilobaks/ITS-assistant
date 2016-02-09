@@ -1,0 +1,16 @@
+HTTP/1.0 200 OK
+Cache-Control: no-cache
+Date:          Sun, 24 Jan 2016 21:59:38 GMT
+
+<div class="container">
+    <div class="row">
+        <div class="header text-center">
+            <h3>
+                Министерство образования и науки Украины
+                Национальный технический университет Украины
+                «Киевский политехнический институт»
+                Институт телекоммуникационных систем
+            </h3>
+        </div>
+    </div>
+</div>

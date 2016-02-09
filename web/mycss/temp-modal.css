@@ -1,0 +1,12 @@
+#tempModal h2 {
+    color:#08C;
+    font-family: 'Comfortaa', cursive;
+}
+#tempModal .modal-body {
+    color: #204d74;
+}
+#tempModal,  {
+    top:5%;
+    right:50%;
+    outline: none;
+}

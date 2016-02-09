@@ -9,16 +9,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>ITS-assistant</title>
         <!-- Bootstrap -->
-        {% stylesheets
-            'bundles/app/bower_components/bootstrap/dist/css/bootstrap.min.css'
-            '@AppBundle/Resources/mycss/AnimatedBorderMenu/*'
-        %}
+        {% stylesheets '@bootstrap_css' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
+            <link href='https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'/>
         {% endstylesheets %}
-        {% javascripts '@AppBundle/Resources/myjs/AnimatedBorderMenu/modernizr.custom.js'%}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         {% block stylesheets %}{% endblock %}
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -29,37 +23,14 @@
     </head>
 
     <body>
-        <nav id="bt-menu" class="bt-menu">
-            <a href="#" class="bt-menu-trigger"><span>Menu</span></a>
-            <ul id="open-app-button">
-                <li><a href="" class="fa fa-calculator fa-3x" id="open-ip-calc"  title="IP-калькулятор"></a></li>
-                <li><a href="" class="fa fa-file-text-o fa-3x" id="open-master-report" title="Мастер-отчетов"></a></li>
-                <li><a href="" class="fa fa-sitemap fa-3x" id="open-card-carno" title="Карты Карно"></a></li>
-                <li><a href="" class="fa fa-anchor fa-3x" id="open-diagram" title="Диаграма Вольпера-Смитта"></a></li>
-            </ul>
-            <ul>
-                <li><a href="#" class="fa fa-refresh" title="Обновить"></a></li>
-                <li><a href="#" class="fa fa-comment" title="Обратная связь"></a></li>
-
-                {#<li><a href="#" class="fa fa-vk fa-3x">VK</a></li>#}
-                {#<li><a href="#" class="fa fa-facebook fa-3x">Facebook</a></li>#}
-                {#<li><a href="#" class="fa fa-google-plus fa-3x">Google+</a></li>#}
-            </ul>
-        </nav>
+        {% block javascripts %}{% endblock %}
         {% block body %}{% endblock %}
         {% javascripts
-            'bundles/app/bower_components/jquery/dist/jquery.min.js'
-            'bundles/app/bower_components/bootstrap/dist/js/bootstrap.min.js' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-        {% javascripts
-            '@AppBundle/Resources/myjs/AnimatedBorderMenu/classie.js'
-            '@AppBundle/Resources/myjs/AnimatedBorderMenu/borderMenu.js'
+            '@jquery'
+            '@bootstrap_js'
+            'myjs/useCross.js'
         %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
-        {% block javascripts %}{% endblock %}
-        <script src="js/classie.js"></script>
-        <script src="js/borderMenu.js"></script>
     </body>
 </html>
