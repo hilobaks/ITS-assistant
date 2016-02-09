@@ -16,5 +16,6 @@ Look at the space between the bits of the addresses: The bits before it are the 
 
 2)  Report Wizard generates the title page of your report, based on data that you enter.
 
+In projest used : Framework PHP Symfony 2, Bootstrap 3 Framework, Jquery(small), Native JS(many), Knp-Snappy-Bundle (for generate pdf files)
 
 Project Team : Aleksandr Khylobokyi(team lider), Irina Timchenko(junior dev), Gavrilin Ivan(web-design)
