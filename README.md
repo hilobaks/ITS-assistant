@@ -18,4 +18,4 @@ Look at the space between the bits of the addresses: The bits before it are the 
 
 In projest used : Framework PHP Symfony 2, Bootstrap 3 Framework, Jquery(small), Native JS(many), Knp-Snappy-Bundle (for generate pdf files)
 
-Project Team : Aleksandr Khylobokyi(team lider), Irina Timchenko(junior dev), Gavrilin Ivan(web-design)
+Project Team : Aleksandr Khylobokyi(team leader), Irina Timchenko(junior dev), Gavrilin Ivan(web-design)
